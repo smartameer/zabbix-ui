@@ -4,14 +4,14 @@
   /** @ngInject */
   function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
       .state('app', {
         abstract: true
       })
       .state('home', {
-        url: '/',
+        url: '/dashboard',
         parent: 'app',
         views: {
           'content@': {
@@ -19,8 +19,19 @@
           }
         },
         data: {
-          title: 'Dashboard'
+          title: 'Dashboard',
+          class: 'dashboard-body'
         }
+      })
+      .state('login', {
+        url: '/login',
+        parent: 'app',
+        views: {
+          'content@': {
+            component: 'login'
+          }
+        },
+        data: { }
       });
   }
 

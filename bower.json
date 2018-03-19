@@ -36,6 +36,12 @@
         "angular.min.js"
       ]
     },
+    "angular-ui-router": {
+      "main": [
+          "release/angular-ui-router.min.js",
+          "release/stateEvents.min.js"
+      ]
+    },
     "angular-bootstrap": {
       "main": [
         "ui-bootstrap-csp.css",
