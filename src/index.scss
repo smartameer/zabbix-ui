@@ -1,0 +1,51 @@
+html {
+  /** remove iOS text size adjust without disabling user zoom */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  /** eliminate 300ms click delay */
+  -ms-touch-action: manipulation; /** IE10 */
+  touch-action: manipulation; /** IE11 */
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* remove the gray background color from active links in IE */
+a {
+  background: transparent;
+  cursor: pointer;
+}
+/* address style set to "bolder" in Firefox, Safari and Chrome */
+b, strong { font-weight: bold; }
+
+/* address "overflow" set to "hidden" in IE */
+button { overflow: visible; }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+
+$body-bg: #fffefe;
+$fa-font-path: 'fonts/webfonts';
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// bower:scss
+// endbower
+
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    background-repeat: repeat;
+    @include transition(all .15s linear);
+}
+
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector

@@ -6,10 +6,11 @@
       "namespace": "fountain-angular1:app",
       "_": [],
       "framework": "angular1",
-      "modules": "webpack",
-      "js": "babel",
+      "modules": "inject",
+      "js": "js",
       "css": "scss",
       "ci": [],
+      "sample": "hello",
       "router": "uirouter"
     }
   }
