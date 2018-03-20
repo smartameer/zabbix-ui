@@ -25,6 +25,12 @@
   </ul>
   <ul class="sidebar-nav sidebar-nav-bottom">
     <li>
+      <a data-ng-href="" title="My Account">
+        <span class="glyphicon glyphicon-user"></span>
+        <span data-ng-hide="!vm.isCollapsed">My Account</span>
+      </a>
+    </li>
+    <li>
       <a data-ng-href="" data-ng-click="vm.logout()" title="Logout">
         <span class="glyphicon glyphicon-log-out"></span>
         <span data-ng-hide="!vm.isCollapsed">Logout</span>
