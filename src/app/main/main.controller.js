@@ -2,12 +2,12 @@
   'use strict';
 
   /** @ngInject */
-  function AppController() {
-    var vm = this;
+  function MainController() {
+    const vm = this;
     vm.hello = 'Hello World!';
   }
 
   angular
     .module('zabbix')
-    .controller('AppController', AppController);
+    .controller('MainController', MainController);
 })();

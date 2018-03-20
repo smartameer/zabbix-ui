@@ -1,0 +1,107 @@
+%transition {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 64px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #101010;
+  @extend %transition;
+  & + .after-sidebar {
+      padding-left: 64px;
+      @extend %transition;
+  }
+  &.toggled {
+      width: 250px;
+      @extend %transition;
+      & + .after-sidebar {
+          padding-left: 250px;
+          @extend %transition;
+      }
+  }
+  .sidebar-nav {
+      position: absolute;
+      top: 0;
+      width: 250px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+          text-indent: 10px;
+          user-select: none;
+          -moz-user-select: none;
+          h2 {
+              padding-left: 12px;
+              font-size: xx-large;
+              font-weight: bolder;
+              margin: 0;
+              padding-top: 16px;
+              padding-bottom: 0;
+          }
+          a {
+              @extend %transition;
+              display: block;
+              border-left: 5px solid transparent;
+              text-decoration: none;
+              color: #eeeeee;
+              text-shadow: 0 1px 1px #000;
+              font-size: 20px;
+              font-weight: 500;
+              padding: 16px 8px 16px 2px;
+              height: 54px;
+              .glyphicon, .fa {
+                  font-size: 20px;
+                  margin-right: 12px;
+                  color: #eeeeee;
+                  min-width: 28px;
+              }
+              &:hover {
+                  text-decoration: none;
+                  color: #fff;
+                  background: rgba(255, 255, 255, 0.2);
+                  border-left-color: rgba(255, 255, 255, 0.2);
+              }
+              &:active, &:focus {
+                  text-decoration: none;
+                  background: rgba(255, 255, 255, 0.2);
+                  border-left-color: rgba(255, 255, 255, 0.2);
+              }
+          }
+          &.active {
+              a {
+                  border-left-color: #007aff;
+              }
+          }
+          &.sidebar-brand {
+              height: 120px;
+              font-size: 28px;
+              line-height: 80px;
+              color: #ffffff;
+              border-bottom: 1px dotted #999;
+              margin-bottom: 50px;
+          }
+      }
+      &.sidebar-nav-bottom {
+          top: auto;
+          bottom: 0;
+          li:last-child > a {
+              background-color: #007aff;
+              color: #fff;
+              padding-left: 0;
+              &:hover, &:focus {
+                  background-color: #007aff;
+                  color: #fff;
+                  border-left-color: #007aff;
+              }
+          }
+      }
+  }
+}

@@ -1,0 +1,39 @@
+<div class="sidebar-wrapper" data-ng-class="{true: 'toggled'}[vm.isCollapsed]">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <span data-ng-hide="!vm.isCollapsed">Zabbix</span>
+      <h2 data-ng-hide="vm.isCollapsed">Z</h2>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="dashboard" title="Dashboard">
+        <span class="glyphicon glyphicon-th"></span>
+        <span data-ng-hide="!vm.isCollapsed">Dashboard</span>
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a href="#" title="Hosts">
+        <span class="glyphicon glyphicon-hdd"></span>
+        <span data-ng-hide="!vm.isCollapsed">Hosts</span>
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a href="#" title="Host Groups">
+        <span class="glyphicon glyphicon-cloud"></span>
+        <span data-ng-hide="!vm.isCollapsed">Hosts Groups</span>
+      </a>
+    </li>
+  </ul>
+  <ul class="sidebar-nav sidebar-nav-bottom">
+    <li>
+      <a data-ng-href="" data-ng-click="vm.logout()" title="Logout">
+        <span class="glyphicon glyphicon-log-out"></span>
+        <span data-ng-hide="!vm.isCollapsed">Logout</span>
+      </a>
+    </li>
+    <li class="toggle">
+      <a data-ng-href="" data-ng-click="vm.toggleSidebar()" title="Toggle Sidebar">
+        <span class="glyphicon glyphicon-transfer"></span>
+      </a>
+    </li>
+  </ul>
+</div>

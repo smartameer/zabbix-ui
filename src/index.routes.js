@@ -10,19 +10,6 @@
       .state('app', {
         abstract: true
       })
-      .state('home', {
-        url: '/dashboard',
-        parent: 'app',
-        views: {
-          'content@': {
-            component: 'hello'
-          }
-        },
-        data: {
-          title: 'Dashboard',
-          class: 'dashboard-body'
-        }
-      })
       .state('login', {
         url: '/login',
         parent: 'app',
@@ -31,7 +18,33 @@
             component: 'login'
           }
         },
-        data: { }
+        data: {
+          class: 'login-body'
+        }
+      })
+      .state('loggedin', {
+        parent: 'app',
+        abstract: true,
+        views: {
+          'content@': {
+            component: 'main'
+          }
+        },
+        data: {
+          class: 'loggedin-body'
+        }
+      })
+      .state('dashboard', {
+        url: '/',
+        parent: 'loggedin',
+        views: {
+          'main@loggedin': {
+            component: 'dashboard'
+          }
+        },
+        data: {
+          title: 'Dashboard'
+        }
       });
   }
 
