@@ -45,6 +45,30 @@
         data: {
           title: 'Dashboard'
         }
+      })
+      .state('hosts', {
+        url: '/',
+        parent: 'loggedin',
+        views: {
+          'main@loggedin': {
+            component: 'hosts'
+          }
+        },
+        data: {
+          title: 'Hosts'
+        }
+      })
+      .state('hostgroups', {
+        url: '/',
+        parent: 'loggedin',
+        views: {
+          'main@loggedin': {
+            component: 'hostgroups'
+          }
+        },
+        data: {
+          title: 'Host Groups'
+        }
       });
   }
 
