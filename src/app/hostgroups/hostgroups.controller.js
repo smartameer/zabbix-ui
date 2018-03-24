@@ -2,9 +2,21 @@
   'use strict';
 
   /** @ngInject */
-  function HostGroupsController() {
+  function HostGroupsController($http, ZABBIX_CONSTANTS) {
     const vm = this;
-    vm.title = 'HostGroups';
+    vm.title = 'Host Groups';
+    vm.hostgroups = [];
+
+    vm.getHostGroups = function () {
+      $http({
+        url: ZABBIX_CONSTANTS.BASE_URI,
+        data: ZABBIX_CONSTANTS.API.HOSTGROUPS
+      }).then(function (response) {
+        vm.hostgroups = response.data.result;
+      });
+    };
+
+    vm.getHostGroups();
   }
 
   angular

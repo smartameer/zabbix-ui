@@ -2,14 +2,14 @@
   'use strict';
 
   /** @ngInject */
-  const runBlock = function ($rootScope, $trace, $state, AuthService) {
+  const runBlock = function ($rootScope, $trace, $state, toastr, AuthService) {
     $trace.enable('TRANSITION');
     $rootScope.pageTitle = 'Zabbix';
     $rootScope.pageClass = '';
     AuthService.init();
 
     const stateStartCall = $rootScope.$on('$stateChangeStart', function (event, state) {
-      if ((angular.isDefined(state.data) && state.data.authentication === true) && !AuthService.isLoggedIn()){
+      if ((angular.isDefined(state.data) && state.data.authentication === true) && !AuthService.isLoggedIn()) {
         event.preventDefault();
         $state.transitionTo('login', {}, {reload: true});
         return;
@@ -35,10 +35,12 @@
       appendToBody: true
     });
     toastrConfig.allowHtml = true;
-    toastrConfig.timeOut = 3000;
+    toastrConfig.timeOut = 60000;
     toastrConfig.positionClass = 'toast-bottom-center';
-    toastrConfig.preventDuplicates = true;
-    toastrConfig.progressBar = true;
+    toastrConfig.autoDismiss = false;
+    toastrConfig.tapToDismiss = false;
+    toastrConfig.closeButton = true;
+    toastrConfig.closeHtml = '<button class="btn btn-inverse btn-sm text-uppercase">Close</button>';
   };
 
   const constants = {
@@ -58,6 +60,22 @@
         params: {
           output: 'extend',
           sortfield: 'name'
+        }
+      },
+      HOSTS: {
+        method: 'host.get',
+        params: {
+          output: ['name', 'status'],
+          selectGroups: ['groupid', 'name'],
+          selectInterfaces: ['ip', 'port'],
+          preservekeys: true
+        }
+      },
+      ITEMS: {
+        method: 'item.get',
+        params: {
+          output: ['hostid', 'name', 'description', 'lastvalue'],
+          hostids: []
         }
       }
     }

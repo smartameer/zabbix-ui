@@ -15,6 +15,7 @@
     vm.login = function () {
       AuthService.login(vm.username, vm.password)
         .then(function () {
+          toastr.info('Welcome to Zabbix');
           $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
         }, function (error) {
           vm.password = '';

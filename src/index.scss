@@ -46,12 +46,12 @@ $yellow:  #FF7518 !default;
 $green:   #3FB618 !default;
 $teal:    #20c997 !default;
 $cyan:    #9954BB !default;
-$primary:       $blue !default;
+$brand-primary:       $blue !default;
 $secondary:     $gray-800 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
+$brand-success:       $green !default;
+$brand-info:          $cyan !default;
+$brand-warning:       $yellow !default;
+$brand-danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 $enable-rounded: false !default;
@@ -79,6 +79,38 @@ body {
     @include transition(all .15s linear);
 }
 
+#toast-container .toast {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #101010;
+    background-size: 16px;
+    padding: 15px;
+    padding-left: 38px;
+    opacity: 1;
+    border-radius: 3px;
+    .btn {
+        background: #282828;
+        padding: 4px 8px;
+        color: #fff;
+        text-shadow: unset;
+        & + div {
+            padding-top: 4px;
+        }
+        &:hover {
+            background: #282828;
+            color: #fff;
+            opacity: 1;
+        }
+    }
+    color: #fff;
+    &.toast-success { color: $brand-success; }
+    &.toast-warning { color: $brand-warning; }
+    &.toast-error { color: $brand-danger; }
+    &.toast-info { color: $brand-primary; }
+    &:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #101010;
+    }
+}
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically
