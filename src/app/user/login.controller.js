@@ -2,23 +2,26 @@
   'use strict';
 
   /** @ngInject */
-  function LoginController($state, $timeout, $cookies) {
+  function LoginController($state, $cookies, toastr, AuthService, ZABBIX_CONSTANTS) {
+    const zabbixAuth = $cookies.get('zabbix-auth');
+    if (ZABBIX_CONSTANTS.SECURITY.LOGGED === true && angular.isDefined(zabbixAuth)) {
+      $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
+      return;
+    }
     var vm = this;
-
     vm.username = '';
     vm.password = '';
 
     vm.login = function () {
-      $cookies.putObject('session', {username: vm.username, password: vm.password});
-      $timeout(function () {
-        $state.go('dashboard', {inherit: false, location: true});
-      }, 1000);
+      AuthService.login(vm.username, vm.password)
+        .then(function () {
+          $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
+        }, function (error) {
+          vm.password = '';
+          toastr.error(error.data);
+          return false;
+        });
     };
-
-    const session = $cookies.getObject('session');
-    if (angular.isObject(session)) {
-      $state.go('dashboard', {inherit: false, location: true});
-    }
   }
 
   angular

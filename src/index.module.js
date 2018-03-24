@@ -6,6 +6,7 @@
       'ui.router',
       'ui.router.state.events',
       'ui.bootstrap',
+      'toastr',
       'ngMessages',
       'ngAria',
       'ngSanitize',

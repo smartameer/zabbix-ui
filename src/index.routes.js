@@ -43,6 +43,7 @@
           }
         },
         data: {
+          authentication: true,
           title: 'Dashboard'
         }
       })
@@ -55,6 +56,7 @@
           }
         },
         data: {
+          authentication: true,
           title: 'Hosts'
         }
       })
@@ -67,6 +69,7 @@
           }
         },
         data: {
+          authentication: true,
           title: 'Host Groups'
         }
       });

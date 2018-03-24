@@ -26,7 +26,7 @@
     };
 
     vm.logout = function () {
-      $cookies.remove('session');
+      $cookies.remove('zabbix-auth');
       $state.go('login', {inherit: false, location: true});
     };
   }

@@ -16,23 +16,26 @@ body.login-body {
         }
         h2 {
            font-weight: 300;
-           padding-bottom: 20px;
+           padding-bottom: 30px;
 		}
         .form-group {
             margin-top: 40px;
-        }
-        .form-control {
-            background-color: transparent;
-            color: #fff;
-            border: none;
-            border-bottom: 1px solid #fff;
-            border-radius: 0;
-            box-shadow: none;
+            font-size: 16px;
+            .form-control {
+                background-color: transparent;
+                color: #fff;
+                border: none;
+                border-bottom: 1px solid #fff;
+                border-radius: 0;
+                box-shadow: none;
+                font-size: 18px;
+            }
         }
         .btn {
             background: transparent;
             border: 1px solid #fff;
             border-radius: 2px;
+            font-size: 18px;
         }
     }
 }
