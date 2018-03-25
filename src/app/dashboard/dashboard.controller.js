@@ -18,13 +18,13 @@
     vm.selectActiveType = function (type) {
       vm.activeType = type || '';
       if (type === 'alert') {
-         vm.triggers = angular.copy(vm.problems);
+        vm.triggers = angular.copy(vm.problems);
       } else if (type === 'warning') {
-         vm.triggers = angular.copy(vm.unknowns);
+        vm.triggers = angular.copy(vm.unknowns);
       } else if (type === 'information') {
-         vm.triggers = angular.copy(vm.informations);
+        vm.triggers = angular.copy(vm.informations);
       } else {
-         vm.triggers = angular.copy(vm.masterTriggers);
+        vm.triggers = angular.copy(vm.masterTriggers);
       }
     };
 
@@ -73,21 +73,21 @@
       }).then(function (response) {
         vm.masterTriggers = response.data.result;
         angular.forEach(vm.masterTriggers, function (trigger) {
-          if ("4" == trigger.priority || "5" == trigger.priority) {
+          if (parseInt(trigger.priority, 10) === 4 || parseInt(trigger.priority, 10) === 5) {
             vm.problems.push(trigger);
-            if ("0" == trigger.lastEvent.acknowledged) {
+            if (parseInt(trigger.lastEvent.acknowledged, 10) === 0) {
               vm.problemCount += 1;
             }
           }
-          if ("2" == trigger.priority || "3" == trigger.priority) {
-            vm.unknowns.push(trigger)
-            if ("0" == trigger.lastEvent.acknowledged) {
+          if (parseInt(trigger.priority, 10) === 2 || parseInt(trigger.priority, 10) === 3) {
+            vm.unknowns.push(trigger);
+            if (parseInt(trigger.lastEvent.acknowledged, 10) === 0) {
               vm.unknownCount += 1;
             }
           }
-          if ("0" == trigger.priority || "1" == trigger.priority) {
+          if (parseInt(trigger.priority, 10) === 0 || parseInt(trigger.priority, 10) === 1) {
             vm.informations.push(trigger);
-            if ("0" == trigger.lastEvent.acknowledged) {
+            if (parseInt(trigger.lastEvent.acknowledged, 10) === 0) {
               vm.informationCount += 1;
             }
           }
