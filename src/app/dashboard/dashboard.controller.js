@@ -49,7 +49,7 @@
       const diffMin = diffHour - (deltaMin * MINUTE_MILLISECOND);
       const deltaSec = Math.floor(diffMin / SECOND_MILLISECOND);
 
-      let deltaDate = '';
+      var deltaDate = '';
       if (deltaDay !== 0) {
         deltaDate += deltaDay + 'd ';
       }
