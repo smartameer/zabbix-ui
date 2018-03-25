@@ -2,31 +2,35 @@
   <h3 class="page-header">{{zhgc.title}}</h3>
   <div class="col-sm-12">
     <div class="panel panel-default">
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Group Name</th>
-            <th class="text-center">No. of Hosts</th>
-            <th class="text-center">Group ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-ng-if="zhgc.hostgroups.length > 0" data-ng-repeat="rec in zhgc.hostgroups">
-            <td class="text-primary">{{rec.name}}</td>
-            <td class="text-center">
-              <span class="label label-primary">{{(rec.hosts && rec.hosts.length) || 0 }}</span>
-            </td>
-            <td class="text-center">{{rec.groupid}}</td>
-          </tr>
-          <tr data-ng-if="zhgc.hostgroups.length <= 0">
-            <td colspan="3" class="text-center">
-              <br/><br/>
-              <div class="h4 text-info">No Host Groups found.</div>
-              <br/><br/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Group ID</th>
+              <th>Group Name</th>
+              <th class="text-center">No. of Hosts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-if="zhgc.hostgroups.length > 0" data-ng-repeat="rec in zhgc.hostgroups">
+              <td>{{rec.groupid}}</td>
+              <td>
+                <a ui-sref="hosts({hostgroup: rec.groupid})" title="{{rec.name}}">{{rec.name}}</a>
+              </td>
+              <td class="text-center">
+                <span class="label label-primary">{{(rec.hosts && rec.hosts.length) || 0 }}</span>
+              </td>
+            </tr>
+            <tr data-ng-if="zhgc.hostgroups.length <= 0">
+              <td colspan="3" class="text-center">
+                <br/><br/>
+                <div class="h4 text-info">No Host Groups found.</div>
+                <br/><br/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

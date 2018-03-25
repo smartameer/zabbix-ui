@@ -2,7 +2,7 @@
   'use strict';
 
   /** @ngInject */
-  function HostsController($http, $filter, ZABBIX_CONSTANTS) {
+  function HostsController($http, $state, $stateParams, $filter, toastr, ZABBIX_CONSTANTS) {
     const vm = this;
     vm.title = 'Hosts';
     vm.hosts = {};
@@ -21,14 +21,22 @@
 
       vm.selectedGroupId = group.groupid;
       vm.selectedGroupName = group.name;
+      vm.filterHosts();
+    };
+
+    vm.filterHosts = function () {
       vm.hosts = [];
-      angular.forEach(vm.masterResponse, function (host) {
-        angular.forEach(host.groups, function (group) {
-          if (group.groupid === vm.selectedGroupId) {
-            vm.hosts.push(host);
-          }
+      if (vm.selectedGroupId) {
+        angular.forEach(vm.masterResponse, function (host) {
+          angular.forEach(host.groups, function (group) {
+            if (group.groupid === vm.selectedGroupId) {
+              vm.hosts.push(host);
+            }
+          });
         });
-      });
+      } else {
+        vm.hosts = angular.copy(Object.values(vm.masterResponse));
+      }
     };
 
     vm.getGroups = function (callback) {
@@ -37,6 +45,15 @@
         data: angular.extend({}, ZABBIX_CONSTANTS.API.HOSTGROUPS, {params: {output: ['groupid', 'name']}})
       }).then(function (response) {
         vm.groups = response.data.result;
+        if (angular.isDefined($stateParams.hostgroup)) {
+          const group = $filter('filter')(vm.groups, {groupid: $stateParams.hostgroup}, true);
+          if (group.length <= 0 ) {
+            toastr.warning('Hostgroup does not exists');
+            $state.transitionTo('hostgroups', {}, {inherit: false, location: true});
+            return;
+          }
+          vm.selectGroup(group[0]);
+        }
         if (angular.isDefined(callback)) {
           callback();
         }
@@ -49,7 +66,7 @@
         data: ZABBIX_CONSTANTS.API.HOSTS
       }).then(function (response) {
         vm.masterResponse = response.data.result;
-        vm.hosts = angular.copy(Object.values(vm.masterResponse));
+        vm.filterHosts();
         if (angular.isDefined(callback)) {
           callback();
         }

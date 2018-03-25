@@ -19,31 +19,33 @@
         </div>
       </div>
     </div>
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Monitored</th>
-          <th>Host IP</th>
-          <th data-ng-if="zhc.selectedGroupId == false">Group Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-ng-repeat="host in zhc.hosts">
-          <td class="text-primary">{{host.name}}</td>
-          <td>
-            <span data-ng-class="{true: 'label label-success', false: 'label label-danger'}[host.status == 1]">
-            {{host.status == 1 ? 'Yes': 'No'}}
-            </span>
-          </td>
-          <td>
-            <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}</span>
-          </td>
-          <td data-ng-if="zhc.selectedGroupId == false">
-            <span class="label label-primary" data-ng-repeat="group in host.groups">{{group.name}}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Monitored</th>
+            <th>Host IP</th>
+            <th data-ng-if="zhc.selectedGroupId == false">Group Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="host in zhc.hosts">
+            <td class="text-primary">{{host.name}}</td>
+            <td>
+              <span data-ng-class="{true: 'label label-success', false: 'label label-danger'}[host.status == 1]">
+              {{host.status == 1 ? 'Yes': 'No'}}
+              </span>
+            </td>
+            <td>
+              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}</span>
+            </td>
+            <td data-ng-if="zhc.selectedGroupId == false">
+              <span class="label label-primary" data-ng-repeat="group in host.groups">{{group.name}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

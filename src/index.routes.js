@@ -48,7 +48,7 @@
         }
       })
       .state('hosts', {
-        url: '/hosts',
+        url: '/hosts?hostgroup',
         parent: 'loggedin',
         views: {
           'main@loggedin': {
