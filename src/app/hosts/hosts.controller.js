@@ -47,7 +47,7 @@
         vm.groups = response.data.result;
         if (angular.isDefined($stateParams.hostgroup)) {
           const group = $filter('filter')(vm.groups, {groupid: $stateParams.hostgroup}, true);
-          if (group.length <= 0 ) {
+          if (group.length <= 0) {
             toastr.warning('Hostgroup does not exists');
             $state.transitionTo('hostgroups', {}, {inherit: false, location: true});
             return;

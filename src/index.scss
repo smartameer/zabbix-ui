@@ -25,17 +25,6 @@ button { overflow: visible; }
  *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
  */
 $web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" !default;
-$white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #868e96 !default;
-$gray-700: #495057 !default;
-$gray-800: #373a3c !default;
-$gray-900: #212529 !default;
-$black:    #000 !default;
 $blue:    #2780E3 !default;
 $indigo:  #6610f2 !default;
 $purple:  #613d7c !default;
@@ -46,22 +35,39 @@ $yellow:  #FF7518 !default;
 $green:   #3FB618 !default;
 $teal:    #20c997 !default;
 $cyan:    #9954BB !default;
+
 $brand-primary:       $blue !default;
-$secondary:     $gray-800 !default;
 $brand-success:       $green !default;
 $brand-info:          $cyan !default;
 $brand-warning:       $yellow !default;
 $brand-danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
-$enable-rounded: false !default;
+$border-radius-base: 2px;
+$border-radius-small: 1px;
+$border-radius-large: 3px;
 $font-family-sans-serif: "Segoe UI", "Source Sans Pro", Calibri, Candara, Arial, sans-serif !default;
-$navbar-dark-hover-color:           rgba($white,1) !default;
-$navbar-light-hover-color:          rgba($black,.9) !default;
+$font-size-base: 13px;
+$headings-font-weight: 300;
 // Alerts
 $alert-border-width:                0 !default;
 
-$body-bg: $gray-100;
+$panel-primary-border: $brand-primary;
+$panel-success-border: $brand-success;
+$panel-info-border: $brand-info;
+$panel-warning-border: $brand-warning;
+$panel-danger-border: $brand-danger;
+
+$panel-primary-text: $brand-primary;
+$panel-success-text: $brand-success;
+$panel-info-text: $brand-info;
+$panel-warning-text: $brand-warning;
+$panel-danger-text: $brand-danger;
+
+$panel-primary-heading-bg: #fff;
+$panel-success-heading-bg: #fff;
+$panel-info-heading-bg: #fff;
+$panel-warning-heading-bg: #fff;
+$panel-danger-heading-bg: #fff;
+
 $fa-font-path: 'fonts/webfonts';
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject

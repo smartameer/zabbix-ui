@@ -43,47 +43,8 @@
     toastrConfig.closeHtml = '<button class="btn btn-inverse btn-sm text-uppercase">Close</button>';
   };
 
-  const constants = {
-    BASE_URI: 'http://localhost/api_jsonrpc.php',
-    SECURITY: {
-      LOGGED: false,
-      TOKEN: ''
-    },
-    API: {
-      LOGIN: {
-        method: 'user.login',
-        auth: null,
-        id: 0
-      },
-      HOSTGROUPS: {
-        method: 'hostgroup.get',
-        params: {
-          output: 'extend',
-          sortfield: 'name'
-        }
-      },
-      HOSTS: {
-        method: 'host.get',
-        params: {
-          output: ['name', 'status'],
-          selectGroups: ['groupid', 'name'],
-          selectInterfaces: ['ip', 'port'],
-          preservekeys: true
-        }
-      },
-      ITEMS: {
-        method: 'item.get',
-        params: {
-          output: ['hostid', 'name', 'description', 'lastvalue'],
-          hostids: []
-        }
-      }
-    }
-  };
-
   angular
     .module('zabbix')
     .run(runBlock)
-    .config(configBlock)
-    .constant('ZABBIX_CONSTANTS', constants);
+    .config(configBlock);
 })();

@@ -8,7 +8,8 @@
         if (angular.isDefined(config.data)) {
           const data = {
             jsonrpc: '2.0',
-            id: 1
+            id: new Date().getTime(),
+            auth: null
           };
           const zabbixAuth = $cookies.get('zabbix-auth');
           if (angular.isDefined(zabbixAuth) && ZABBIX_CONSTANTS.SECURITY.LOGGED === true) {

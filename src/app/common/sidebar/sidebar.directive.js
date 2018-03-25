@@ -6,7 +6,7 @@
     const directive = {
       restrict: 'E',
       replace: true,
-      templateUrl: 'app/main/sidebar/sidebar.html',
+      templateUrl: 'app/common/sidebar/sidebar.html',
       controller: SidebarController,
       controllerAs: 'vm',
       bindToController: true
@@ -16,7 +16,7 @@
   }
 
   /** @ngInject */
-  function SidebarController($cookies, $state) {
+  function SidebarController($cookies, $state, toastr, AuthService) {
     const vm = this;
     vm.isCollapsed = $cookies.get('sidebar-toggled') === '1' || false;
 
@@ -26,8 +26,11 @@
     };
 
     vm.logout = function () {
-      $cookies.remove('zabbix-auth');
-      $state.go('login', {inherit: false, location: true});
+      AuthService.logout(function () {
+        $cookies.remove('zabbix-auth');
+        toastr.info('You have been logged out successfully.');
+        $state.go('login', {inherit: false, location: true});
+      });
     };
   }
 

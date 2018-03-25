@@ -38,7 +38,7 @@
               </span>
             </td>
             <td>
-              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}</span>
+              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}, </span>
             </td>
             <td data-ng-if="zhc.selectedGroupId == false">
               <span class="label label-primary" data-ng-repeat="group in host.groups">{{group.name}}</span>

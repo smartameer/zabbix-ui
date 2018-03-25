@@ -1,3 +1,125 @@
-<div class="row-fluid">
+<div class="row-fluid dashboard">
   <h3 class="page-header">{{zdc.title}}</h3>
+  <div class="col-sm-12 col-md-12 top-panel">
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h4 class="panel-title">Active Alerts</h4>
+        </div>
+        <div class="panel-body panel-bg">
+          <div class="media">
+            <div class="media-left">
+              <span class="glyphicon glyphicon-warning-sign"></span>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-center blink" data-ng-bind="zdc.problemCount"></h2>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer text-right">
+          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('alert')">Show Triggers</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <h4 class="panel-title text-uppercase">Active Warnings</h4>
+        </div>
+        <div class="panel-body panel-bg">
+          <div class="media">
+            <div class="media-left">
+              <span class="glyphicon glyphicon-exclamation-sign"></span>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-center" data-ng-bind="zdc.unknownCount"></h2>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer text-right">
+          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('warning')">Show Triggers</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title text-uppercase">Active Informations</h4>
+        </div>
+        <div class="panel-body panel-bg">
+          <div class="media">
+            <div class="media-left">
+              <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-center" data-ng-bind="zdc.informationCount"></h2>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer text-right">
+          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('information')">Show Triggers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title" ng-switch on="zdc.activeType">
+          <span ng-switch-when="alert">Active Alert Triggers</span>
+          <span ng-switch-when="warning">Active Warning Triggers</span>
+          <span ng-switch-when="information">Active Information Triggers</span>
+          <span ng-switch-default>Active Triggers</span>
+          <button uib-tooltip="Show all triggers" tooltip-placement="left" data-ng-if="zdc.activeType != ''" class="close" data-ng-click="zdc.selectActiveType()">&times;</button>
+        </h4>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th class="text-center">Date</th>
+              <th>Severity</th>
+              <th class="text-center">Status</th>
+              <th class="text-center">Acknowledged</th>
+              <th>Host</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="trigger in zdc.triggers">
+              <td class="text-center" ng-switch on="trigger.priority" tooltip-placement="right" uib-tooltip={{zdc.agoFormat(trigger.lastchange)}}>
+                <span ng-switch-default class="label label-primary">{{zdc.convDate(trigger.lastchange)}}</span>
+                <span ng-switch-when="1" class="label label-primary">{{zdc.convDate(trigger.lastchange)}}</span>
+                <span ng-switch-when="2" class="label label-warning">{{zdc.convDate(trigger.lastchange)}}</span>
+                <span ng-switch-when="3" class="label label-warning">{{zdc.convDate(trigger.lastchange)}}</span>
+                <span ng-switch-when="4" class="label lable-danger blink">{{zdc.convDate(trigger.lastchange)}}</span>
+                <span ng-switch-when="5" class="label label-danger blink">{{zdc.convDate(trigger.lastchange)}}</span>
+              </td>
+              <td ng-switch on="trigger.priority">
+                <span ng-switch-default>Not Classified</span>
+                <span ng-switch-when="1">Information</span>
+                <span ng-switch-when="2">Warning</span>
+                <span ng-switch-when="3">Average</span>
+                <span ng-switch-when="4" class="blink text-danger">High</span>
+                <span ng-switch-when="5" class="blink text-danger">Disaster</span>
+              </td>
+              <td class="text-center">
+                <span class="label label-success" data-ng-if="trigger.value == 0">OK</span>
+                <span class="label label-danger" data-ng-if="trigger.value == 1">Problem</span>
+              </td>
+              <td class="text-center">
+                <span class="label label-success" data-ng-if="trigger.lastEvent.acknowledged != 0">Yes</span>
+                <span class="label label-danger" data-ng-if="trigger.lastEvent.acknowledged == 0">Not yet</span>
+              </td>
+              <td>{{trigger.hosts[0].host}}</td>
+              <td>{{trigger.description}}</td>
+            </tr>
+            <tr data-ng-if="zdc.triggers.length <= 0">
+              <td colspan="6" class="text-center text-info">No triggers found</td>
+            <tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
