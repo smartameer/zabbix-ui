@@ -13,11 +13,7 @@
       .state('login', {
         url: '/login',
         parent: 'app',
-        views: {
-          'content@': {
-            component: 'login'
-          }
-        },
+        views: {'content@': {component: 'login'}},
         data: {
           class: 'login-body'
         }
@@ -25,11 +21,7 @@
       .state('loggedin', {
         parent: 'app',
         abstract: true,
-        views: {
-          'content@': {
-            component: 'main'
-          }
-        },
+        views: {'content@': {component: 'main'}},
         data: {
           class: 'loggedin-body'
         }
@@ -37,11 +29,7 @@
       .state('dashboard', {
         url: '/',
         parent: 'loggedin',
-        views: {
-          'main@loggedin': {
-            component: 'dashboard'
-          }
-        },
+        views: {'main@loggedin': {component: 'dashboard'}},
         data: {
           authentication: true,
           title: 'Dashboard'
@@ -50,24 +38,25 @@
       .state('hosts', {
         url: '/hosts?hostgroup',
         parent: 'loggedin',
-        views: {
-          'main@loggedin': {
-            component: 'hosts'
-          }
-        },
+        views: {'main@loggedin': {component: 'hosts'}},
         data: {
           authentication: true,
           title: 'Hosts'
         }
       })
+      .state('host', {
+        url: '/host/:id',
+        parent: 'loggedin',
+        views: {'main@loggedin': {component: 'host'}},
+        data: {
+          authentication: true,
+          title: 'Host Details'
+        }
+      })
       .state('hostgroups', {
         url: '/hostgroups',
         parent: 'loggedin',
-        views: {
-          'main@loggedin': {
-            component: 'hostgroups'
-          }
-        },
+        views: {'main@loggedin': {component: 'hostgroups'}},
         data: {
           authentication: true,
           title: 'Host Groups'

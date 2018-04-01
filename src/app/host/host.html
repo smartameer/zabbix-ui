@@ -1,0 +1,126 @@
+<div class="row-fluid" data-ng-cloak>
+  <h3 class="page-header">{{zhc.title}}</h3>
+  <div class="col-md-9 col-sm-12 no-padding">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">CPU Performance</h4>
+        </div>
+        <div class="panel-body">
+          <c3chart bindto-id="cpu-graph" chart-data="zhc.cpu.used" chart-columns="zhc.cpu.column">
+            <chart-colors color-pattern="#60B044,#F6C600,#F97600,#FF0000" thresholds="50,70,80,90"></chart-colors>
+            <chart-gauge width="39" show-label="true" expand="true"></chart-gauge>
+          </c3chart>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Memory Performance</h4>
+        </div>
+        <div class="panel-body">
+          <h5 class="affix">
+            <span>Total: {{zhc.memory.total}}MB</span><br/><br/>
+            <span>Available: {{zhc.memory.available}}MB</span>
+          </h5>
+          <c3chart bindto-id="memory-graph" chart-data="zhc.memory.used" chart-columns="zhc.memory.column">
+            <chart-colors color-pattern="#60B044,#F6C600,#F97600,#FF0000" thresholds="50,70,80,90"></chart-colors>
+            <chart-gauge width="39" show-label="true" expand="true"></chart-gauge>
+          </c3chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Host Details</h4>
+      </div>
+      <div class="list-group">
+        <div class="list-group-item">
+          Status
+          <span class="pull-right">
+            <span class="glyphicon" data-ng-class="{true: 'glyphicon-ok-sign text-success', false: 'glyphicon-warning-sign text-danger'}[zhc.host.status==0]"></span>
+            {{zhc.host.status == 0 ? 'Monitored': 'Not Monitored'}}
+          </span>
+        </div>
+        <div class="list-group-item">
+          Availability
+          <span class="pull-right">
+            <span class="glyphicon" ng-class="{1: 'glyphicon-ok-sign text-success', 2: 'fa-warning-sign text-danger', 0: 'glyphicon-question-sign text-warning'}[zhc.host.available]" ></span>
+            {{zhc.host.available == 2 ? 'Unavailable': (zhc.host.available == 1 ? 'Availabile': 'Unknwon')}}
+          </span>
+        </div>
+        <div class="list-group-item">
+          Group
+          <span class="pull-right">
+            <span class="label label-primary" data-ng-repeat="group in zhc.host.groups">{{group.name}}</span>
+          </span>
+        </div>
+        <div class="list-group-item">
+          IP Address
+          <span class="pull-right">
+            <span class="text-primary">{{zhc.host.interfaces[0].ip}}:{{zhc.host.interfaces[0].port}}</span>
+          </span>
+        </div>
+        <div class="list-group-item">
+          Up since
+          <span class="pull-right">
+            <span class="text-primary">{{zhc.host.uptime | date: 'MMM dd yyyy hh:mm' }}</span>
+          </span>
+        </div>
+        <div class="list-group-item">
+          Running vs Total Processes
+          <span class="pull-right">
+            {{zhc.process.running}} / {{zhc.process.total}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12" data-ng-if="zhc.host.graphs.length > 0">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <span class="glyphicon glyphicon-stats"></span> Graphs
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="col-sm-12">
+          <div class="btn-group" uib-dropdown>
+            <button class="btn btn-default">{{zhc.selectedGraphName}}</button>
+            <button id="group-names" type="button" class="btn btn-default" uib-dropdown-toggle>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="group-names">
+              <li data-ng-class="{'active': zhc.selectedGraphId == graph.graphid}" data-ng-repeat="graph in zhc.host.graphs" role="menuitem">
+                <a data-ng-href="#" data-ng-click="zhc.selectGraph(graph)">{{graph.name}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="btn-group pull-right" uib-dropdown>
+            <button class="btn btn-default">Time Period: {{zhc.graphTimePeriods[zhc.selectedTimePeriod]}}</button>
+            <button id="time-period" type="button" class="btn btn-default" uib-dropdown-toggle>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="time-period">
+              <li data-ng-class="{'active': zhc.selectedTimePeriod == id}" data-ng-repeat="(id, time) in zhc.graphTimePeriods" role="menuitem">
+                <a data-ng-href="#" data-ng-click="zhc.selectTimePeriod(id)">{{time}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <span class="glyphicon glyphicon-signal"></span> Network Statistics
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>

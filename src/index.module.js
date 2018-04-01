@@ -10,6 +10,7 @@
       'ngMessages',
       'ngAria',
       'ngSanitize',
-      'ngCookies'
+      'ngCookies',
+      'gridshore.c3js.chart'
     ]);
 })();

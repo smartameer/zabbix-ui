@@ -21,7 +21,7 @@
         vm.triggers = angular.copy(vm.problems);
       } else if (type === 'warning') {
         vm.triggers = angular.copy(vm.unknowns);
-      } else if (type === 'information') {
+      } else if (type === 'info') {
         vm.triggers = angular.copy(vm.informations);
       } else {
         vm.triggers = angular.copy(vm.masterTriggers);

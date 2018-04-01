@@ -5,7 +5,6 @@
   const runBlock = function ($rootScope, $trace, $state, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
     ZABBIX_CONSTANTS.BASE_URI = SERVER_CONSTANTS.BASE_URI;
     $trace.enable('TRANSITION');
-    $rootScope.pageTitle = 'Zabbix';
     $rootScope.pageClass = '';
     AuthService.init();
 
@@ -18,6 +17,7 @@
     });
 
     const stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function (event, state) {
+      $rootScope.pageTitle = 'Zabbix';
       if (angular.isUndefined(state.data)) {
         return;
       }

@@ -4,7 +4,7 @@
   const app = {
     templateUrl: 'app/hosts/hosts.html',
     controller: 'HostsController',
-    controllerAs: 'zhc'
+    controllerAs: 'zhsc'
   };
 
   angular

@@ -62,6 +62,10 @@
                   margin-right: 12px;
                   color: #eeeeee;
                   min-width: 28px;
+                  & + span {
+                      top: -2px;
+                      position: relative;
+                  }
               }
               &:hover {
                   text-decoration: none;

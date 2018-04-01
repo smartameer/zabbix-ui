@@ -1,4 +1,4 @@
-<div class="row-fluid dashboard">
+<div class="row-fluid dashboard" data-ng-cloak>
   <h3 class="page-header">{{zdc.title}}</h3>
   <div class="col-sm-12 col-md-12 top-panel">
     <div class="col-sm-4 col-md-4 col-lg-4">
@@ -57,18 +57,18 @@
           </div>
         </div>
         <div class="panel-footer text-right">
-          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('information')">Show Triggers</a>
+          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('info')">Show Triggers</a>
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-8 col-md-8">
-    <div class="panel panel-default">
+    <div class="panel" data-ng-class="{alert: 'panel-danger', warning: 'panel-warning', info: 'panel-primary', '': 'panel-default'}[zdc.activeType]">
       <div class="panel-heading">
         <h4 class="panel-title" ng-switch on="zdc.activeType">
           <span ng-switch-when="alert">Active Alert Triggers</span>
           <span ng-switch-when="warning">Active Warning Triggers</span>
-          <span ng-switch-when="information">Active Information Triggers</span>
+          <span ng-switch-when="info">Active Information Triggers</span>
           <span ng-switch-default>Active Triggers</span>
           <button uib-tooltip="Show all triggers" tooltip-placement="left" data-ng-if="zdc.activeType != ''" class="close" data-ng-click="zdc.selectActiveType()">&times;</button>
         </h4>
@@ -111,7 +111,9 @@
                 <span class="label label-success" data-ng-if="trigger.lastEvent.acknowledged != 0">Yes</span>
                 <span class="label label-danger" data-ng-if="trigger.lastEvent.acknowledged == 0">Not yet</span>
               </td>
-              <td>{{trigger.hosts[0].host}}</td>
+              <td>
+                <a ui-sref="host({id: trigger.hosts[0].hostid})" title="{{trigger.hosts[0].host}}">{{trigger.hosts[0].host}}</a>
+              </td>
               <td>{{trigger.description}}</td>
             </tr>
             <tr data-ng-if="zdc.triggers.length <= 0">

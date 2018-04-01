@@ -51,11 +51,21 @@
           preservekeys: true
         }
       },
-      ITEMS: {
+      HOST_DETAILS: {
+        method: 'host.get',
+        params: {
+          output: ['name', 'status', 'available', 'host'],
+          hostid: null,
+          selectGroups: ['name'],
+          selectInterfaces: ['ip', 'port'],
+          selectGraphs: ['graphid', 'name']
+        }
+      },
+      HOST_ITEMS: {
         method: 'item.get',
         params: {
-          output: ['hostid', 'name', 'description', 'lastvalue'],
-          hostids: []
+          output: ['status', 'name', 'key_', 'lastvalue', 'description', 'state', 'error', 'lastclock', 'units'],
+          hostids: null
         }
       }
     }

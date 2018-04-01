@@ -1,19 +1,19 @@
-<div class="row-fluid">
-  <h3 class="page-header">{{zhc.title}}</h3>
+<div class="row-fluid" data-ng-cloak>
+  <h3 class="page-header">{{zhsc.title}} <span class="badge">{{zhsc.hosts.length}}</span></h3>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="text-right">
         Host Groups:
         <div class="btn-group btn-group-sm" uib-dropdown>
           <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-            {{zhc.selectedGroupName}} <span class="caret"></span>
+            {{zhsc.selectedGroupName}} <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-            <li role="menuitem" data-ng-class="{'active': zhc.selectedGroupId == false}">
-              <a data-ng-click="zhc.selectGroup()">All</a>
+            <li role="menuitem" data-ng-class="{'active': zhsc.selectedGroupId == false}">
+              <a data-ng-click="zhsc.selectGroup()">All</a>
             </li>
-            <li data-ng-class="{'active': zhc.selectedGroupId == group.groupid}" role="menuitem" data-ng-repeat="group in zhc.groups">
-              <a data-ng-href="#" data-ng-click="zhc.selectGroup(group)">{{group.name}}</a>
+            <li data-ng-class="{'active': zhsc.selectedGroupId == group.groupid}" role="menuitem" data-ng-repeat="group in zhsc.groups">
+              <a data-ng-href="#" data-ng-click="zhsc.selectGroup(group)">{{group.name}}</a>
             </li>
           </ul>
         </div>
@@ -26,21 +26,23 @@
             <th>Name</th>
             <th>Monitored</th>
             <th>Host IP</th>
-            <th data-ng-if="zhc.selectedGroupId == false">Group Name</th>
+            <th data-ng-if="zhsc.selectedGroupId == false">Group Name</th>
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="host in zhc.hosts">
-            <td class="text-primary">{{host.name}}</td>
+          <tr data-ng-repeat="host in zhsc.hosts">
+            <td>
+              <a ui-sref="host({id: host.hostid})" title="{{host.name}}">{{host.name}}</a>
+            </td>
             <td>
               <span data-ng-class="{true: 'label label-success', false: 'label label-danger'}[host.status == 1]">
               {{host.status == 1 ? 'Yes': 'No'}}
               </span>
             </td>
             <td>
-              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}, </span>
+              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}{{$last ? '' : ', '}}</span>
             </td>
-            <td data-ng-if="zhc.selectedGroupId == false">
+            <td data-ng-if="zhsc.selectedGroupId == false">
               <span class="label label-primary" data-ng-repeat="group in host.groups">{{group.name}}</span>
             </td>
           </tr>
