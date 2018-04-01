@@ -14,3 +14,8 @@
 .no-right-padding {
     padding-right: 0;
 }
+
+.dropdown-menu {
+    overflow-y: auto;
+    max-height: 210px;
+}
