@@ -1,0 +1,15 @@
+.css-content-progress {
+    top: 0;
+    width: 100%;
+    @include transition(width .30s linear);
+    height: 2px;
+    display: block;
+    border-radius: 0;
+    .progress {
+        height: 2px;
+        .progress-bar {
+            color: transparent;
+            height: 2px;
+        }
+    }
+}
