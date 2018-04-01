@@ -2,7 +2,8 @@
   'use strict';
 
   /** @ngInject */
-  const runBlock = function ($rootScope, $trace, $state, toastr, AuthService) {
+  const runBlock = function ($rootScope, $trace, $state, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
+    ZABBIX_CONSTANTS.BASE_URI = SERVER_CONSTANTS.BASE_URI;
     $trace.enable('TRANSITION');
     $rootScope.pageTitle = 'Zabbix';
     $rootScope.pageClass = '';
