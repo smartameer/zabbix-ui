@@ -92,7 +92,6 @@
 
       vm.process.total = totalProcess.lastvalue;
       vm.process.running = runningProcess.lastvalue;
-
     };
 
     vm.getHostItems = function (id) {

@@ -8,6 +8,11 @@
       TOKEN: ''
     },
     API: {
+      VERSION: {
+        method: 'apiinfo.version',
+        auth: null,
+        params: {}
+      },
       LOGIN: {
         method: 'user.login',
         auth: null

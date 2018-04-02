@@ -2,12 +2,12 @@
   'use strict';
 
   /** @ngInject */
-  const runBlock = function ($rootScope, $trace, $state, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
-    ZABBIX_CONSTANTS.BASE_URI = SERVER_CONSTANTS.BASE_URI;
+  const runBlock = function ($rootScope, $trace, $state, $cookies, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
+    const url = $cookies.get('zabbix-server');
+    ZABBIX_CONSTANTS.BASE_URI = decodeURIComponent(url) || SERVER_CONSTANTS.BASE_URI;
     $trace.enable('TRANSITION');
-    $rootScope.pageClass = '';
-    AuthService.init();
 
+    $rootScope.pageClass = '';
     const stateStartCall = $rootScope.$on('$stateChangeStart', function (event, state) {
       if ((angular.isDefined(state.data) && state.data.authentication === true) && !AuthService.isLoggedIn()) {
         event.preventDefault();
@@ -27,6 +27,12 @@
 
     $rootScope.$on('$destroy', stateStartCall);
     $rootScope.$on('$destroy', stateSuccessCall);
+    if (!url) {
+      $cookies.remove('zabbix-auth');
+      $state.transitionTo('login', {}, {inherit: false, location: true});
+      return;
+    }
+    AuthService.init();
   };
 
   /** @ngInject */

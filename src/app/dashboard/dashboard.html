@@ -4,7 +4,7 @@
     <div class="col-sm-4 col-md-4 col-lg-4">
       <div class="panel panel-danger">
         <div class="panel-heading">
-          <h4 class="panel-title">Active Alerts</h4>
+          <h4 class="panel-title text-uppercase">Active Alerts</h4>
         </div>
         <div class="panel-body panel-bg">
           <div class="media">
@@ -13,11 +13,9 @@
             </div>
             <div class="media-body">
               <h2 class="media-heading text-center blink" data-ng-bind="zdc.problemCount"></h2>
+              <a data-ng-href="#" data-ng-click="zdc.selectActiveType('alert')">Show Triggers</a>
             </div>
           </div>
-        </div>
-        <div class="panel-footer text-right">
-          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('alert')">Show Triggers</a>
         </div>
       </div>
     </div>
@@ -33,11 +31,9 @@
             </div>
             <div class="media-body">
               <h2 class="media-heading text-center" data-ng-bind="zdc.unknownCount"></h2>
+              <a data-ng-href="#" data-ng-click="zdc.selectActiveType('warning')">Show Triggers</a>
             </div>
           </div>
-        </div>
-        <div class="panel-footer text-right">
-          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('warning')">Show Triggers</a>
         </div>
       </div>
     </div>
@@ -53,11 +49,9 @@
             </div>
             <div class="media-body">
               <h2 class="media-heading text-center" data-ng-bind="zdc.informationCount"></h2>
+              <a data-ng-href="#" data-ng-click="zdc.selectActiveType('info')">Show Triggers</a>
             </div>
           </div>
-        </div>
-        <div class="panel-footer text-right">
-          <a data-ng-href="#" data-ng-click="zdc.selectActiveType('info')">Show Triggers</a>
         </div>
       </div>
     </div>
@@ -65,7 +59,7 @@
   <div class="col-sm-8 col-md-8">
     <div class="panel" data-ng-class="{alert: 'panel-danger', warning: 'panel-warning', info: 'panel-primary', '': 'panel-default'}[zdc.activeType]">
       <div class="panel-heading">
-        <h4 class="panel-title" ng-switch on="zdc.activeType">
+        <h4 class="panel-title text-uppercase" ng-switch on="zdc.activeType">
           <span ng-switch-when="alert">Active Alert Triggers</span>
           <span ng-switch-when="warning">Active Warning Triggers</span>
           <span ng-switch-when="info">Active Information Triggers</span>

@@ -28,6 +28,7 @@
     vm.logout = function () {
       AuthService.logout(function () {
         $cookies.remove('zabbix-auth');
+        $cookies.remove('zabbix-server');
         toastr.info('You have been logged out successfully.');
         $state.go('login', {inherit: false, location: true});
       });

@@ -37,12 +37,14 @@
             font-size: 58px;
             margin-left: 10px;
         }
-    }
-    .panel-footer {
-        a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
+        .panel-body {
+            a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: 600;
+                float: right;
+            }
+            background: #8b8b8b;
         }
     }
     .panel-danger {
@@ -51,9 +53,6 @@
             color: #fff;
             text-shadow: 0 0 1px rgba(#000, 0.6);
         }
-        .panel-footer {
-            background: $brand-danger;
-        }
     }
     .panel-warning {
         .panel-bg {
@@ -61,18 +60,12 @@
             color: #fff;
             text-shadow: 0 0 1px rgba(#000, 0.6);
         }
-        .panel-footer {
-            background: $brand-warning;
-        }
     }
     .panel-primary {
         .panel-bg {
             background: $brand-primary;
             color: #fff;
             text-shadow: 0 0 1px rgba(#000, 0.6);
-        }
-        .panel-footer {
-            background: $brand-primary;
         }
     }
     .media-heading {
