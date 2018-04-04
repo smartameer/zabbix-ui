@@ -17,7 +17,6 @@
     vm.interval = 0;
 
     vm.process = {
-      total: 0,
       running: 0
     };
 
@@ -25,7 +24,7 @@
       column: [{id: 'Memory', type: 'gauge'}],
       used: [{Memory: 0}],
       total: 0,
-      available: 0
+      free: 0
     };
 
     vm.cpu = {
@@ -92,12 +91,18 @@
       // RAM
       const memoryTotal = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[total]'}, true)[0];
       const totalmemory = parseFloat(memoryTotal.lastvalue);
-      const memoryAvailable = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[available]'}, true)[0];
-      const availableMemory = parseFloat(memoryAvailable.lastvalue);
-      const used = totalmemory - availableMemory;
+      let memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[free]'}, true);
+      if (memoryFree.length <= 0) {
+        memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[available]'}, true);
+        if (memoryFree.length <= 0) {
+          memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[pavailable]'}, true);
+        }
+      }
+      const freeMemory = parseFloat(memoryFree[0].lastvalue);
+      const used = totalmemory - freeMemory;
       vm.memory.used[0].Memory = ((used / totalmemory) * 100).toFixed(2);
       vm.memory.total = (totalmemory / (1024 * 1024)).toFixed(2);
-      vm.memory.available = (availableMemory / (1024 * 1024)).toFixed(2);
+      vm.memory.free = (freeMemory / (1024 * 1024)).toFixed(2);
 
       // CPU
       const cpuloadLastMin = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg1]'}, true)[0];
@@ -110,10 +115,7 @@
       vm.cpu.last15min = parseFloat(cpuloadLast15Min.lastvalue).toFixed(2);
 
       // Process
-      const totalProcess = $filter('filter')(vm.hostItems, {key_: 'proc.num[]'}, true)[0];
-      const runningProcess = $filter('filter')(vm.hostItems, {key_: 'proc.num[,,run]'}, true)[0];
-
-      vm.process.total = totalProcess.lastvalue;
+      const runningProcess = $filter('filter')(vm.hostItems, {key_: 'proc.num[]'}, true)[0];
       vm.process.running = runningProcess.lastvalue;
     };
 

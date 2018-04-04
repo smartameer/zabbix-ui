@@ -22,7 +22,7 @@
         <div class="panel-body">
           <h5 class="status pull-right">
             <span>Total: {{zhc.memory.total}}MB</span><br/><br/>
-            <span>Available: {{zhc.memory.available}}MB</span>
+            <span>Free: {{zhc.memory.free}}MB</span>
           </h5>
           <c3chart bindto-id="memory-graph" chart-data="zhc.memory.used" chart-columns="zhc.memory.column">
             <chart-colors color-pattern="#60B044,#F6C600,#F97600,#FF0000" thresholds="50,70,80,90"></chart-colors>
@@ -71,10 +71,8 @@
           </span>
         </div>
         <div class="list-group-item">
-          Running vs Total Processes
-          <span class="pull-right">
-            {{zhc.process.running}} / {{zhc.process.total}}
-          </span>
+          Running Processes
+          <span class="pull-right"> {{zhc.process.running}} </span>
         </div>
       </div>
     </div>
