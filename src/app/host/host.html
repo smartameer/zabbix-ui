@@ -1,4 +1,4 @@
-<div class="row-fluid" data-ng-cloak>
+<div class="row-fluid host" data-ng-cloak>
   <h3 class="page-header">{{zhc.title}}</h3>
   <div class="col-md-9 col-sm-12 no-padding">
     <div class="col-sm-6">
@@ -99,27 +99,43 @@
               </li>
             </ul>
           </div>
+          <div class="btn-group">
+            <button data-ng-model="zhc.refreshType" data-ng-click="zhc.changeRefresh()" class="btn btn-default" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+              {{zhc.refreshType == 1 ? 'Every 10s': 'Manual'}}
+              <span data-ng-class="{'glyphicon glyphicon-refresh rotating': zhc.refreshType == 1}"></span>
+            </button>
+            <button class="btn btn-success" data-ng-if="zhc.refreshType == 0" data-ng-click="zhc.getGraph()">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </div>
           <div class="btn-group pull-right" uib-dropdown>
-            <button class="btn btn-default">Time Period: {{zhc.graphTimePeriods[zhc.selectedTimePeriod]}}</button>
+            <button class="btn btn-default">Time Period: {{(zhc.graphTimePeriods | filter:{value:zhc.selectedTimePeriod}:true)[0].label}}</button>
             <button id="time-period" type="button" class="btn btn-default" uib-dropdown-toggle>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="time-period">
-              <li data-ng-class="{'active': zhc.selectedTimePeriod == id}" data-ng-repeat="(id, time) in zhc.graphTimePeriods" role="menuitem">
-                <a data-ng-href="#" data-ng-click="zhc.selectTimePeriod(id)">{{time}}</a>
+              <li data-ng-class="{'active': zhc.selectedTimePeriod == item.value}" data-ng-repeat="item in zhc.graphTimePeriods" role="menuitem">
+                <a data-ng-href="#" data-ng-click="zhc.selectTimePeriod(item)">{{item.label}}</a>
               </li>
             </ul>
+          </div>
+        </div>
+        <div class="graph-wrapper text-center">
+          <div class="img-responsive" data-ng-if="zhc.graphData != ''">
+            <img src="{{zhc.graphData}}" />
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-sm-12">
+  <div class="col-sm-12 hidden">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <span class="glyphicon glyphicon-signal"></span> Network Statistics
         </h4>
+      </div>
+      <div class="panel-body">
       </div>
     </div>
   </div>

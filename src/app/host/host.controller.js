@@ -2,7 +2,7 @@
   'use strict';
 
   /** @ngInject */
-  function HostController($http, $state, $stateParams, $filter, toastr, ZABBIX_CONSTANTS) {
+  function HostController($http, $state, $stateParams, $filter, $timeout, $interval, toastr, ZABBIX_CONSTANTS) {
     const vm = this;
     vm.title = 'Host';
     vm.host = {
@@ -11,6 +11,10 @@
     vm.hostItems = [];
     vm.selectedGraphName = '';
     vm.selectedGraphId = 0;
+    vm.selectedTimePeriod = 1 * 60 * 60;
+    vm.refreshType = 0;
+    vm.graphData = '';
+    vm.interval = 0;
 
     vm.process = {
       total: 0,
@@ -33,23 +37,41 @@
       last15min: 0
     };
 
-    vm.graphTimePeriods = {
-      '1h': '1 hour',
-      '2h': '2 hour',
-      '3h': '3 hour',
-      '6h': '6 hour',
-      '12h': '12 hour',
-      '1d': '1 day',
-      '2d': '2 days',
-      '7d': '1 week',
-      '14d': '2 weeks',
-      '1y': '1 year'
+    vm.getGraph = function () {
+      let params = 'period=' + vm.selectedTimePeriod + '&height=200&graphid=' + vm.selectedGraphId + '&t=' + new Date().getTime();
+      vm.graphData = ZABBIX_CONSTANTS.CHART_URI + '?' + params;
     };
 
-    vm.selectedTimePeriod = '1h';
+    vm.changeRefresh = function () {
+      $timeout(function () {
+        if (vm.refreshType === 1) {
+          vm.interval = $interval(function () {
+            vm.getGraph();
+          }, 10000);
+        } else {
+          $interval.cancel(vm.interval);
+        }
+      }, 10);
+    };
 
-    vm.selectTimePeriod = function (id) {
-      vm.selectedTimePeriod = id;
+    vm.graphTimePeriods = [
+      {label: '1 hour', value: 1 * 60 * 60},
+      {label: '2 hours', value: 2 * 60 * 60},
+      {label: '3 hours', value: 3 * 60 * 60},
+      {label: '6 hours', value: 6 * 60 * 60},
+      {label: '12 hours', value: 12 * 60 * 60},
+      {label: '1 day', value: 24 * 60 * 60},
+      {label: '2 days', value: 2 * 24 * 60 * 60},
+      {label: '1 week', value: 7 * 24 * 60 * 60},
+      {label: '2 weeks', value: 14 * 24 * 60 * 60},
+      {label: '1 month', value: 30 * 24 * 60 * 60},
+      {label: '3 months', value: 3 * 30 * 24 * 60 * 60},
+      {label: '6 months', value: 6 * 30 * 24 * 60 * 60}
+    ];
+
+    vm.selectTimePeriod = function (item) {
+      vm.selectedTimePeriod = item.value;
+      vm.getGraph();
     };
 
     if (angular.isUndefined($stateParams.id) || isNaN(parseInt($stateParams.id, 10))) {
@@ -60,6 +82,7 @@
     vm.selectGraph = function (graph) {
       vm.selectedGraphName = graph.name;
       vm.selectedGraphId = graph.graphid;
+      vm.getGraph();
     };
 
     vm.setHostData = function () {
@@ -125,6 +148,7 @@
           vm.selectedGraphName = vm.host.graphs[0].name;
           vm.selectedGraphId = vm.host.graphs[0].graphid;
           vm.getHostItems(id);
+          vm.getGraph();
         } else {
           toastr.warning('Invalid Host');
           $state.transitionTo('hosts');

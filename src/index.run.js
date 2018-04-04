@@ -4,7 +4,11 @@
   /** @ngInject */
   const runBlock = function ($rootScope, $trace, $state, $cookies, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
     const url = $cookies.get('zabbix-server');
-    ZABBIX_CONSTANTS.BASE_URI = decodeURIComponent(url) || SERVER_CONSTANTS.BASE_URI;
+    ZABBIX_CONSTANTS.BASE_URI = (angular.isDefined(url) && decodeURIComponent(url)) || SERVER_CONSTANTS.BASE_URI;
+    let uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
+    uri = uri.slice(0, uri.length - 1);
+    uri.push('chart2.php');
+    ZABBIX_CONSTANTS.CHART_URI = uri.join('/');
     $trace.enable('TRANSITION');
 
     $rootScope.pageClass = '';

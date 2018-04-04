@@ -11,7 +11,7 @@
     var vm = this;
     vm.username = '';
     vm.password = '';
-    vm.server = '';
+    vm.server = ZABBIX_CONSTANTS.BASE_URI;
 
     vm.login = function () {
       if (vm.server.trim() === '') {
@@ -25,8 +25,15 @@
       }).then(function () {
         ZABBIX_CONSTANTS.BASE_URI = vm.server;
         $cookies.put('zabbix-server', vm.server);
+        $cookies.put('zabbix-username', btoa(vm.username));
+        $cookies.put('zabbix-password', btoa(vm.password));
+        $cookies.put('zabbix-server', vm.server);
         AuthService.login(vm.username, vm.password)
           .then(function () {
+            let uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
+            uri = uri.slice(0, uri.length - 1);
+            uri.push('chart2.php');
+            ZABBIX_CONSTANTS.CHART_URI = uri.join('/');
             toastr.info('Welcome to Zabbix');
             $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
           }, function (error) {
