@@ -1,6 +1,17 @@
 .host {
-    .graph-wrapper {
-        min-height: 380px;
+    .panel-body {
+        overflow: hidden;
+        position: relative;
+        .graph-wrapper {
+            min-height: 380px;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .status {
+            position: absolute;
+            right: 20px;
+            z-index: 1;
+        }
     }
 }
 

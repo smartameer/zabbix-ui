@@ -35,8 +35,8 @@
               <a ui-sref="host({id: host.hostid})" title="{{host.name}}">{{host.name}}</a>
             </td>
             <td>
-              <span data-ng-class="{true: 'label label-success', false: 'label label-danger'}[host.status == 1]">
-              {{host.status == 1 ? 'Yes': 'No'}}
+              <span data-ng-class="{true: 'label label-success', false: 'label label-danger'}[host.status == 0]">
+              {{host.status == 0 ? 'Yes': 'No'}}
               </span>
             </td>
             <td>
