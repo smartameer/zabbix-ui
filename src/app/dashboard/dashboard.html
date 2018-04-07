@@ -12,7 +12,7 @@
               <span class="glyphicon glyphicon-warning-sign"></span>
             </div>
             <div class="media-body">
-              <h2 class="media-heading text-center blink" data-ng-bind="zdc.problemCount"></h2>
+              <h2 class="media-heading text-center"  data-ng-class="(zdc.problemCount > 0)?'blink':''" data-ng-bind="zdc.problemCount"></h2>
               <a data-ng-href="#" data-ng-click="zdc.selectActiveType('alert')">Show Triggers</a>
             </div>
           </div>
