@@ -1,7 +1,7 @@
-const gulp = require('gulp');
-const eslint = require('gulp-eslint');
+var gulp = require('gulp');
+var eslint = require('gulp-eslint');
 
-const conf = require('../conf/gulp.conf');
+var conf = require('../conf/gulp.conf');
 
 gulp.task('scripts', scripts);
 

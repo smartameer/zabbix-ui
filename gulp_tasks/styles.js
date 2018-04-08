@@ -1,14 +1,14 @@
-const path = require('path');
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const sourcemaps = require('gulp-sourcemaps');
-const sass = require('gulp-sass');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const gulpInject = require('gulp-inject');
-const wiredep = require('wiredep').stream;
+var path = require('path');
+var gulp = require('gulp');
+var browserSync = require('browser-sync');
+var sourcemaps = require('gulp-sourcemaps');
+var sass = require('gulp-sass');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var gulpInject = require('gulp-inject');
+var wiredep = require('wiredep').stream;
 
-const conf = require('../conf/gulp.conf');
+var conf = require('../conf/gulp.conf');
 
 gulp.task('styles', styles);
 

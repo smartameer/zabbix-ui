@@ -3,7 +3,7 @@
 
   /** @ngInject */
   function LoginController($state, $cookies, $http, toastr, AuthService, ZABBIX_CONSTANTS) {
-    const zabbixAuth = $cookies.get('zabbix-auth');
+    var zabbixAuth = $cookies.get('zabbix-auth');
     if (ZABBIX_CONSTANTS.SECURITY.LOGGED === true && angular.isDefined(zabbixAuth)) {
       $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
       return;
@@ -30,7 +30,7 @@
         $cookies.put('zabbix-server', vm.server);
         AuthService.login(vm.username, vm.password)
           .then(function () {
-            let uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
+            var uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
             uri = uri.slice(0, uri.length - 1);
             uri.push('chart2.php');
             ZABBIX_CONSTANTS.CHART_URI = uri.join('/');

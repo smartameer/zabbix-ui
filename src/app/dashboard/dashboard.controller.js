@@ -3,7 +3,7 @@
 
   /** @ngInject */
   function DashboardController($http, $filter, ZABBIX_CONSTANTS) {
-    const vm = this;
+    var vm = this;
     vm.title = 'Dashboard';
     vm.problems = [];
     vm.unknowns = [];
@@ -29,25 +29,25 @@
     };
 
     vm.convDate = function (timestamp) {
-      const d = new Date(timestamp * 1000);
+      var d = new Date(timestamp * 1000);
       return $filter('date')(d, 'MM/dd/yy hh:mm');
     };
 
     vm.agoFormat = function (lastchange) {
-      const SECOND_MILLISECOND = 1000;
-      const MINUTE_MILLISECOND = 60 * SECOND_MILLISECOND;
-      const HOUR_MILLISECOND = 60 * MINUTE_MILLISECOND;
-      const DAY_MILLISECOND = 24 * HOUR_MILLISECOND;
+      var SECOND_MILLISECOND = 1000;
+      var MINUTE_MILLISECOND = 60 * SECOND_MILLISECOND;
+      var HOUR_MILLISECOND = 60 * MINUTE_MILLISECOND;
+      var DAY_MILLISECOND = 24 * HOUR_MILLISECOND;
 
-      const nowUtime = new Date().getTime();
-      const diffTime = nowUtime - (lastchange * 1000);
-      const deltaDay = Math.floor(diffTime / DAY_MILLISECOND);
-      const diffDay = diffTime - (deltaDay * DAY_MILLISECOND);
-      const deltaHour = Math.floor(diffDay / HOUR_MILLISECOND);
-      const diffHour = diffDay - (deltaHour * HOUR_MILLISECOND);
-      const deltaMin = Math.floor(diffHour / MINUTE_MILLISECOND);
-      const diffMin = diffHour - (deltaMin * MINUTE_MILLISECOND);
-      const deltaSec = Math.floor(diffMin / SECOND_MILLISECOND);
+      var nowUtime = new Date().getTime();
+      var diffTime = nowUtime - (lastchange * 1000);
+      var deltaDay = Math.floor(diffTime / DAY_MILLISECOND);
+      var diffDay = diffTime - (deltaDay * DAY_MILLISECOND);
+      var deltaHour = Math.floor(diffDay / HOUR_MILLISECOND);
+      var diffHour = diffDay - (deltaHour * HOUR_MILLISECOND);
+      var deltaMin = Math.floor(diffHour / MINUTE_MILLISECOND);
+      var diffMin = diffHour - (deltaMin * MINUTE_MILLISECOND);
+      var deltaSec = Math.floor(diffMin / SECOND_MILLISECOND);
 
       var deltaDate = '';
       if (deltaDay !== 0) {

@@ -1,9 +1,9 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const spa = require('browser-sync-spa');
+var gulp = require('gulp');
+var browserSync = require('browser-sync');
+var spa = require('browser-sync-spa');
 
-const browserSyncConf = require('../conf/browsersync.conf');
-const browserSyncDistConf = require('../conf/browsersync-dist.conf');
+var browserSyncConf = require('../conf/browsersync.conf');
+var browserSyncDistConf = require('../conf/browsersync-dist.conf');
 
 browserSync.use(spa());
 

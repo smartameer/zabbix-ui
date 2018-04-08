@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const app = {
+  var app = {
     templateUrl: 'app/hostgroups/hostgroups.html',
     controller: 'HostGroupsController',
     controllerAs: 'zhgc'

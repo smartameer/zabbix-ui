@@ -3,7 +3,7 @@
 
   /** @ngInject */
   function SideBar() {
-    const directive = {
+    var directive = {
       restrict: 'E',
       replace: true,
       templateUrl: 'app/common/sidebar/sidebar.html',
@@ -17,7 +17,7 @@
 
   /** @ngInject */
   function SidebarController($cookies, $state, toastr, AuthService) {
-    const vm = this;
+    var vm = this;
     vm.isCollapsed = $cookies.get('sidebar-toggled') === '1' || false;
 
     vm.toggleSidebar = function () {

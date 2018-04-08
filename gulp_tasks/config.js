@@ -1,6 +1,6 @@
-const gulp = require('gulp');
-const conf = require('../conf/gulp.conf');
-const gulpNgConfig = require('gulp-ng-config');
+var gulp = require('gulp');
+var conf = require('../conf/gulp.conf');
+var gulpNgConfig = require('gulp-ng-config');
 
 gulp.task('config', config);
 

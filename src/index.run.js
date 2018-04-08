@@ -2,17 +2,17 @@
   'use strict';
 
   /** @ngInject */
-  const runBlock = function ($rootScope, $trace, $state, $cookies, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
-    const url = $cookies.get('zabbix-server');
+  var runBlock = function ($rootScope, $trace, $state, $cookies, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
+    var url = $cookies.get('zabbix-server');
     ZABBIX_CONSTANTS.BASE_URI = (angular.isDefined(url) && decodeURIComponent(url)) || SERVER_CONSTANTS.BASE_URI;
-    let uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
+    var uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
     uri = uri.slice(0, uri.length - 1);
     uri.push('chart2.php');
     ZABBIX_CONSTANTS.CHART_URI = uri.join('/');
     $trace.enable('TRANSITION');
 
     $rootScope.pageClass = '';
-    const stateStartCall = $rootScope.$on('$stateChangeStart', function (event, state) {
+    var stateStartCall = $rootScope.$on('$stateChangeStart', function (event, state) {
       if ((angular.isDefined(state.data) && state.data.authentication === true) && !AuthService.isLoggedIn()) {
         event.preventDefault();
         $state.transitionTo('login', {}, {reload: true});
@@ -20,7 +20,7 @@
       }
     });
 
-    const stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function (event, state) {
+    var stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function (event, state) {
       $rootScope.pageTitle = 'Zabbix';
       if (angular.isUndefined(state.data)) {
         return;
@@ -40,7 +40,7 @@
   };
 
   /** @ngInject */
-  const configBlock = function ($httpProvider, $uibTooltipProvider, toastrConfig) {
+  var configBlock = function ($httpProvider, $uibTooltipProvider, toastrConfig) {
     $httpProvider.interceptors.push('TokenInterceptor');
     $uibTooltipProvider.options({
       appendToBody: true

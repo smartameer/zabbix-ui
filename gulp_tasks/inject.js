@@ -1,21 +1,21 @@
-const gulp = require('gulp');
-const path = require('path');
-const browserSync = require('browser-sync');
-const wiredep = require('wiredep').stream;
-const angularFilesort = require('gulp-angular-filesort');
-const gulpInject = require('gulp-inject');
+var gulp = require('gulp');
+var path = require('path');
+var browserSync = require('browser-sync');
+var wiredep = require('wiredep').stream;
+var angularFilesort = require('gulp-angular-filesort');
+var gulpInject = require('gulp-inject');
 
-const conf = require('../conf/gulp.conf');
+var conf = require('../conf/gulp.conf');
 
 gulp.task('inject', inject);
 
 function inject() {
-  const injectStyles = gulp.src([
+  var injectStyles = gulp.src([
     path.join(conf.paths.tmp, '/app/**/*.css'),
     path.join('!' + conf.paths.tmp, '/app/vendor.css')
   ], { read: false });
 
-  const injectScripts = gulp.src([
+  var injectScripts = gulp.src([
     conf.path.tmp('**/*.module.js'),
     conf.path.tmp('**/*.services.js'),
     conf.path.tmp('**/*.filter.js'),
@@ -28,7 +28,7 @@ function inject() {
     `!${conf.path.tmp('**/*.spec.js')}`
   ]);
 
-  const injectOptions = {
+  var injectOptions = {
     ignorePath: [conf.paths.src, conf.paths.tmp],
     addRootSlash: false
   };

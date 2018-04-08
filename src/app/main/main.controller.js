@@ -3,7 +3,7 @@
 
   /** @ngInject */
   function MainController() {
-    const vm = this;
+    var vm = this;
     vm.hello = 'Hello World!';
   }
 

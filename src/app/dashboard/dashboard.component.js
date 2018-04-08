@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const app = {
+  var app = {
     templateUrl: 'app/dashboard/dashboard.html',
     controller: 'DashboardController',
     controllerAs: 'zdc'

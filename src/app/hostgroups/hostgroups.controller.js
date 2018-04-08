@@ -3,7 +3,7 @@
 
   /** @ngInject */
   function HostGroupsController($http, ZABBIX_CONSTANTS) {
-    const vm = this;
+    var vm = this;
     vm.title = 'Host Groups';
     vm.hostgroups = [];
 

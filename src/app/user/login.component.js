@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const login = {
+  var login = {
     templateUrl: 'app/user/login.html',
     controller: 'LoginController',
     controllerAs: 'zlc'

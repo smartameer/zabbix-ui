@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const constants = {
+  var constants = {
     BASE_URI: 'http://localhost/api_jsonrpc.php',
     SECURITY: {
       LOGGED: false,

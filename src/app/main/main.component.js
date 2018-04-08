@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const app = {
+  var app = {
     templateUrl: 'app/main/main.html',
     controller: 'MainController',
     controllerAs: 'zmc'

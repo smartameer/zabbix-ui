@@ -3,9 +3,9 @@
 
   /** @ngInject */
   function AuthService($cookies, $q, $http, ZABBIX_CONSTANTS) {
-    const auth = {};
+    var auth = {};
 
-    const login = function (data) {
+    var login = function (data) {
       return $http({
         url: ZABBIX_CONSTANTS.BASE_URI,
         data: angular.extend({}, ZABBIX_CONSTANTS.API.LOGIN, {
@@ -17,7 +17,7 @@
       });
     };
 
-    const logout = function () {
+    var logout = function () {
       return $http({
         url: ZABBIX_CONSTANTS.BASE_URI,
         data: ZABBIX_CONSTANTS.API.LOGOUT
@@ -37,7 +37,7 @@
           username: username,
           password: password
         }).then(function (response) {
-          const data = response.data;
+          var data = response.data;
           $cookies.put('zabbix-auth', data.result);
           ZABBIX_CONSTANTS.SECURITY.LOGGED = true;
           ZABBIX_CONSTANTS.SECURITY.TOKEN = data.result;

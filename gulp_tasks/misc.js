@@ -1,10 +1,10 @@
-const path = require('path');
-const gulp = require('gulp');
-const del = require('del');
-const filter = require('gulp-filter');
-const mainBowerFiles = require('main-bower-files');
+var path = require('path');
+var gulp = require('gulp');
+var del = require('del');
+var filter = require('gulp-filter');
+var mainBowerFiles = require('main-bower-files');
 
-const conf = require('../conf/gulp.conf');
+var conf = require('../conf/gulp.conf');
 
 gulp.task('clean', clean);
 gulp.task('other', other);
@@ -15,7 +15,7 @@ function clean() {
 }
 
 function other() {
-  const fileFilter = filter(file => file.stat.isFile());
+  var fileFilter = filter(file => file.stat.isFile());
 
   return gulp.src([
     path.join(conf.paths.src, '/**/*'),

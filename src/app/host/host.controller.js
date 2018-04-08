@@ -3,7 +3,7 @@
 
   /** @ngInject */
   function HostController($http, $state, $stateParams, $filter, $timeout, $interval, toastr, ZABBIX_CONSTANTS) {
-    const vm = this;
+    var vm = this;
     vm.title = 'Host';
     vm.host = {
       memory: 0
@@ -37,7 +37,7 @@
     };
 
     vm.getGraph = function () {
-      let params = 'period=' + vm.selectedTimePeriod + '&height=200&graphid=' + vm.selectedGraphId + '&t=' + new Date().getTime();
+      var params = 'period=' + vm.selectedTimePeriod + '&height=200&graphid=' + vm.selectedGraphId + '&t=' + new Date().getTime();
       vm.graphData = ZABBIX_CONSTANTS.CHART_URI + '?' + params;
     };
 
@@ -85,29 +85,29 @@
     };
 
     vm.setHostData = function () {
-      const uptime = $filter('filter')(vm.hostItems, {key_: 'system.uptime'}, true)[0];
+      var uptime = $filter('filter')(vm.hostItems, {key_: 'system.uptime'}, true)[0];
       vm.host.uptime = uptime.lastclock * 1000;
 
       // RAM
-      const memoryTotal = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[total]'}, true)[0];
-      const totalmemory = parseFloat(memoryTotal.lastvalue);
-      let memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[free]'}, true);
+      var memoryTotal = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[total]'}, true)[0];
+      var totalmemory = parseFloat(memoryTotal.lastvalue);
+      var memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[free]'}, true);
       if (memoryFree.length <= 0) {
         memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[available]'}, true);
         if (memoryFree.length <= 0) {
           memoryFree = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[pavailable]'}, true);
         }
       }
-      const freeMemory = parseFloat(memoryFree[0].lastvalue);
-      const used = totalmemory - freeMemory;
+      var freeMemory = parseFloat(memoryFree[0].lastvalue);
+      var used = totalmemory - freeMemory;
       vm.memory.used[0].Memory = ((used / totalmemory) * 100).toFixed(2);
       vm.memory.total = (totalmemory / (1024 * 1024)).toFixed(2);
       vm.memory.free = (freeMemory / (1024 * 1024)).toFixed(2);
 
       // CPU
-      const cpuloadLastMin = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg1]'}, true)[0];
-      const cpuloadLast5Min = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg5]'}, true)[0];
-      const cpuloadLast15Min = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg15]'}, true)[0];
+      var cpuloadLastMin = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg1]'}, true)[0];
+      var cpuloadLast5Min = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg5]'}, true)[0];
+      var cpuloadLast15Min = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg15]'}, true)[0];
 
       vm.cpu.used[0].CPU = parseFloat(cpuloadLastMin.lastvalue).toFixed(2);
       vm.cpu.lastmin = parseFloat(cpuloadLastMin.lastvalue).toFixed(2);
@@ -115,12 +115,12 @@
       vm.cpu.last15min = parseFloat(cpuloadLast15Min.lastvalue).toFixed(2);
 
       // Process
-      const runningProcess = $filter('filter')(vm.hostItems, {key_: 'proc.num[]'}, true)[0];
+      var runningProcess = $filter('filter')(vm.hostItems, {key_: 'proc.num[]'}, true)[0];
       vm.process.running = runningProcess.lastvalue;
     };
 
     vm.getHostItems = function (id) {
-      const data = angular.copy(ZABBIX_CONSTANTS.API.HOST_ITEMS);
+      var data = angular.copy(ZABBIX_CONSTANTS.API.HOST_ITEMS);
       data.params.hostids = id;
       $http({
         url: ZABBIX_CONSTANTS.BASE_URI,
@@ -138,7 +138,7 @@
     };
 
     vm.getHost = function (id) {
-      const data = angular.copy(ZABBIX_CONSTANTS.API.HOST_DETAILS);
+      var data = angular.copy(ZABBIX_CONSTANTS.API.HOST_DETAILS);
       data.params.hostids = id;
       $http({
         url: ZABBIX_CONSTANTS.BASE_URI,

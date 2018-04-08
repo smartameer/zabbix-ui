@@ -1,32 +1,32 @@
-const gulp = require('gulp');
-const filter = require('gulp-filter');
-const useref = require('gulp-useref');
-const lazypipe = require('lazypipe');
-const rev = require('gulp-rev');
-const revReplace = require('gulp-rev-replace');
-const uglify = require('gulp-uglify');
-const cssnano = require('gulp-cssnano');
-const htmlmin = require('gulp-htmlmin');
-const sourcemaps = require('gulp-sourcemaps');
-const uglifySaveLicense = require('uglify-save-license');
-const inject = require('gulp-inject');
-const ngAnnotate = require('gulp-ng-annotate');
+var gulp = require('gulp');
+var filter = require('gulp-filter');
+var useref = require('gulp-useref');
+var lazypipe = require('lazypipe');
+var rev = require('gulp-rev');
+var revReplace = require('gulp-rev-replace');
+var uglify = require('gulp-uglify');
+var cssnano = require('gulp-cssnano');
+var htmlmin = require('gulp-htmlmin');
+var sourcemaps = require('gulp-sourcemaps');
+var uglifySaveLicense = require('uglify-save-license');
+var inject = require('gulp-inject');
+var ngAnnotate = require('gulp-ng-annotate');
 
-const conf = require('../conf/gulp.conf');
+var conf = require('../conf/gulp.conf');
 
 gulp.task('build', build);
 
 function build() {
-  const partialsInjectFile = gulp.src(conf.path.tmp('templateCacheHtml.js'), {read: false});
-  const partialsInjectOptions = {
+  var partialsInjectFile = gulp.src(conf.path.tmp('templateCacheHtml.js'), {read: false});
+  var partialsInjectOptions = {
     starttag: '<!-- inject:partials -->',
     ignorePath: conf.paths.tmp,
     addRootSlash: false
   };
 
-  const htmlFilter = filter(conf.path.tmp('*.html'), {restore: true});
-  const jsFilter = filter(conf.path.tmp('**/*.js'), {restore: true});
-  const cssFilter = filter(conf.path.tmp('**/*.css'), {restore: true});
+  var htmlFilter = filter(conf.path.tmp('*.html'), {restore: true});
+  var jsFilter = filter(conf.path.tmp('**/*.js'), {restore: true});
+  var cssFilter = filter(conf.path.tmp('**/*.css'), {restore: true});
 
   return gulp.src(conf.path.tmp('/index.html'))
     .pipe(inject(partialsInjectFile, partialsInjectOptions))
