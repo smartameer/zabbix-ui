@@ -21,7 +21,7 @@
     });
 
     var stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function (event, state) {
-      $rootScope.pageTitle = 'Zabbix';
+      $rootScope.pageTitle = 'Radon';
       if (angular.isUndefined(state.data)) {
         return;
       }
