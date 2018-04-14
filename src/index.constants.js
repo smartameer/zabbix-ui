@@ -72,6 +72,14 @@
           output: ['status', 'name', 'key_', 'lastvalue', 'description', 'state', 'error', 'lastclock', 'units'],
           hostids: null
         }
+      },
+      APPLICATIONS: {
+        method: 'application.get',
+        params: {
+          output: ['name'],
+          hostids: null,
+          selectItems: ['status', 'name', 'key_', 'lastvalue', 'state', 'error', 'lastclock', 'units']
+        }
       }
     }
   };

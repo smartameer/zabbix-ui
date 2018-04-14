@@ -78,13 +78,14 @@
     </div>
   </div>
   <div class="col-sm-12" data-ng-if="zhc.host.graphs.length > 0">
-    <div class="panel panel-default">
+    <div class="panel panel-default" data-ng-init="graphstatus=true">
       <div class="panel-heading">
         <h4 class="panel-title">
           <span class="glyphicon glyphicon-stats"></span> Graphs
+          <span data-ng-class="graphstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" data-ng-click="graphstatus = !graphstatus" class="pull-right glyphicon"></span>
         </h4>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" data-ng-show="graphstatus">
         <div class="col-sm-12">
           <div class="btn-group" uib-dropdown>
             <button class="btn btn-default">{{zhc.selectedGraphName}}</button>
@@ -126,14 +127,53 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-12 hidden">
-    <div class="panel panel-default">
+  <div class="col-sm-12">
+    <div class="panel panel-default" data-ng-init="appstatus=false">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <span class="glyphicon glyphicon-signal"></span> Network Statistics
+          <span class="glyphicon glyphicon-signal"></span> Applications Statistics
+          <span data-ng-class="appstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" data-ng-click="appstatus = !appstatus" class="pull-right glyphicon"></span>
         </h4>
       </div>
-      <div class="panel-body">
+      <div class="panel-body no-padding" data-ng-show="appstatus">
+        <div class="col-sm-3 col-md-2">
+          <uib-tabset active="zhc.activeApplication" vertical="true" type="pills">
+            <uib-tab index="$index" heading="{{application.name}}" data-ng-repeat="application in zhc.applications">
+            </uib-tab>
+          </uib-tabset>
+        </div>
+        <div class="col-sm-9 col-md-10 tab-content no-right-padding">
+          <table class="table table-bordered table-condensed table-striped">
+            <thead>
+              <tr>
+                <th style="width: 250px">Name</th>
+                <th style="width: 60px" class="text-center">Status</th>
+                <th>Value</th>
+                <th style="width: 60px" class="text-center">State</th>
+                <th class="text-center">Error</th>
+                <th style="width: 120px" class="text-center">Last Check</th>
+                <th style="width: 60px" class="text-center">Graph</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat="item in zhc.applications[zhc.activeApplication].items">
+                <td>{{item.name}}</td>
+                <td class="text-center" uib-tooltip="{{item.status == 1 ? 'Disabled': 'Enabled'}}">
+                  <span class="glyphicon" data-ng-class="{1: 'glyphicon-off text-danger', 0: 'glyphicon-ok text-success'}[item.status]" ></span>
+                </td>
+                <td>{{item.lastvalue}}</td>
+                <td class="text-center" uib-tooltip="{{item.state == 1 ? 'Not Supported': 'Normal'}}">
+                  <span class="glyphicon" data-ng-class="{1: 'glyphicon-warning-sign text-danger', 0: 'glyphicon-ok-sign text-success'}[item.state]" ></span>
+                </td>
+                <td>{{item.error}}</td>
+                <td>{{item.lastclock | date:'MM/dd/yyyy hh:mm'}}</td>
+                <td class="text-center">
+                  <span class="glyphicon glyphicon-stats text-primary" data-ng-click="zhc.showGraphModal(item.itemid)"></span>
+                </td>
+              <tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

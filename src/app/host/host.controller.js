@@ -15,6 +15,8 @@
     vm.refreshType = 0;
     vm.graphData = '';
     vm.interval = 0;
+    vm.activeApplication = 0;
+    vm.applications = [];
 
     vm.process = {
       running: 0
@@ -137,6 +139,23 @@
       });
     };
 
+    vm.getApplications = function (id) {
+      var data = angular.copy(ZABBIX_CONSTANTS.API.APPLICATIONS);
+      data.params.hostids = id;
+      $http({
+        url: ZABBIX_CONSTANTS.BASE_URI,
+        data: data
+      }).then(function (response) {
+        if (response.data.result.length > 0) {
+          vm.applications = response.data.result;
+        } else {
+          toastr.warning('Invalid Host');
+        }
+      }).catch(function () {
+        toastr.error('Could not get the application details. Try again.');
+      });
+    };
+
     vm.getHost = function (id) {
       var data = angular.copy(ZABBIX_CONSTANTS.API.HOST_DETAILS);
       data.params.hostids = id;
@@ -150,6 +169,7 @@
           vm.selectedGraphName = vm.host.graphs[0].name;
           vm.selectedGraphId = vm.host.graphs[0].graphid;
           vm.getHostItems(id);
+          vm.getApplications(id);
           vm.getGraph();
         } else {
           toastr.warning('Invalid Host');
