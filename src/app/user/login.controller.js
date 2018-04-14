@@ -15,7 +15,7 @@
 
     vm.login = function () {
       if (vm.server.trim() === '') {
-        toastr.warning('Invalid Zabbix Endpoint');
+          toastr.warning('Invalid Radon Endpoint');
         return;
       }
 
@@ -34,7 +34,7 @@
             uri = uri.slice(0, uri.length - 1);
             uri.push('chart2.php');
             ZABBIX_CONSTANTS.CHART_URI = uri.join('/');
-            toastr.info('Welcome to Zabbix');
+            toastr.info('Welcome to Radon');
             $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
           }, function (error) {
             vm.password = '';
@@ -42,7 +42,7 @@
             return false;
           });
       }).catch(function () {
-        toastr.warning('Invalid Zabbix Endpoint');
+        toastr.warning('Invalid Radon Endpoint');
       });
     };
   }
