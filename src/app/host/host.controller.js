@@ -15,6 +15,14 @@
     vm.refreshType = 0;
     vm.graphData = '';
     vm.interval = 0;
+
+    vm.selectedItemGraphId = 0;
+    vm.selectedItemGraphName = '';
+    vm.selectedItemTimePeriod = 1 * 60 * 60;
+    vm.itemRefreshType = 0;
+    vm.itemGraphData = '';
+    vm.itemInterval = 0;
+
     vm.activeApplication = 0;
     vm.applications = [];
 
@@ -84,6 +92,47 @@
       vm.selectedGraphName = graph.name;
       vm.selectedGraphId = graph.graphid;
       vm.getGraph();
+    };
+
+    vm.changeItemRefresh = function () {
+      $timeout(function () {
+        if (vm.itemRefreshType === 1) {
+          vm.itemInterval = $interval(function () {
+            vm.refreshItemGraph();
+          }, 10000);
+        } else {
+          $interval.cancel(vm.itemInterval);
+        }
+      }, 10);
+    };
+
+    vm.selectItemGraph = function (item) {
+      vm.unselectItemGraph();
+      vm.selectedItemGraphId = item.itemid;
+      vm.selectedItemGraphName = item.name;
+      vm.refreshItemGraph();
+      $timeout(function () {
+        angular.element(document).find('body')[0].scrollTop = angular.element(document).find('body')[0].scrollHeight;
+      }, 300);
+    };
+
+    vm.unselectItemGraph = function () {
+      vm.selectedItemGraphId = 0;
+      vm.selectedItemGraphName = '';
+      vm.itemGraphData = '';
+      vm.itemRefreshType = 0;
+      vm.selectedItemTimePeriod = 1 * 60 * 60;
+      $interval.cancel(vm.itemInterval);
+    };
+
+    vm.selectItemTimePeriod = function (item) {
+      vm.selectedItemTimePeriod = item.value;
+      vm.refreshItemGraph();
+    };
+
+    vm.refreshItemGraph = function () {
+      var params = 'period=' + vm.selectedItemTimePeriod + '&height=200&itemids=' + vm.selectedItemGraphId + '&t=' + new Date().getTime();
+      vm.itemGraphData = ZABBIX_CONSTANTS.ITEM_CHART_URI + '?' + params;
     };
 
     vm.setHostData = function () {

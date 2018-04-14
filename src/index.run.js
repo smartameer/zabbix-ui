@@ -5,10 +5,14 @@
   var runBlock = function ($rootScope, $trace, $state, $cookies, toastr, AuthService, SERVER_CONSTANTS, ZABBIX_CONSTANTS) {
     var url = $cookies.get('zabbix-server');
     ZABBIX_CONSTANTS.BASE_URI = (angular.isDefined(url) && decodeURIComponent(url)) || SERVER_CONSTANTS.BASE_URI;
+
     var uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
     uri = uri.slice(0, uri.length - 1);
     uri.push('chart2.php');
     ZABBIX_CONSTANTS.CHART_URI = uri.join('/');
+    uri.pop();
+    uri.push('chart.php');
+    ZABBIX_CONSTANTS.ITEM_CHART_URI = uri.join('/');
     $trace.enable('TRANSITION');
 
     $rootScope.pageClass = '';

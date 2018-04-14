@@ -131,7 +131,7 @@
     <div class="panel panel-default" data-ng-init="appstatus=false">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <span class="glyphicon glyphicon-signal"></span> Applications Statistics
+          <span class="glyphicon glyphicon-certificate"></span> Latest Data
           <span data-ng-class="appstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" data-ng-click="appstatus = !appstatus" class="pull-right glyphicon"></span>
         </h4>
       </div>
@@ -168,11 +168,50 @@
                 <td>{{item.error}}</td>
                 <td>{{item.lastclock | date:'MM/dd/yyyy hh:mm'}}</td>
                 <td class="text-center">
-                  <span class="glyphicon glyphicon-stats text-primary" data-ng-click="zhc.showGraphModal(item.itemid)"></span>
+                  <span class="glyphicon glyphicon-stats text-primary" data-ng-click="zhc.selectItemGraph(item)"></span>
                 </td>
               <tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12" data-ng-if="zhc.selectedItemGraphId > 0">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <span class="glyphicon glyphicon-stats"></span> {{zhc.selectedItemGraphName}}
+          <span data-ng-click="zhc.unselectItemGraph()" class="pull-right glyphicon glyphicon-remove-circle"></span>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="col-sm-12">
+          <div class="btn-group">
+            <button data-ng-model="zhc.itemRefreshType" data-ng-click="zhc.changeItemRefresh()" class="btn btn-default" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+              {{zhc.itemRefreshType == 1 ? 'Every 10s': 'Manual'}}
+              <span data-ng-class="{'glyphicon glyphicon-refresh rotating': zhc.itemRefreshType == 1}"></span>
+            </button>
+            <button class="btn btn-success" data-ng-if="zhc.itemRefreshType == 0" data-ng-click="zhc.refreshItemGraph()">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </div>
+          <div class="btn-group pull-right" uib-dropdown>
+            <button class="btn btn-default">Time Period: {{(zhc.graphTimePeriods | filter:{value:zhc.selectedItemTimePeriod}:true)[0].label}}</button>
+            <button id="time-period" type="button" class="btn btn-default" uib-dropdown-toggle>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="time-period">
+              <li data-ng-class="{'active': zhc.selectedItemTimePeriod == item.value}" data-ng-repeat="item in zhc.graphTimePeriods" role="menuitem">
+                <a data-ng-href="#" data-ng-click="zhc.selectItemTimePeriod(item)">{{item.label}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="graph-wrapper text-center">
+          <div class="img-responsive" data-ng-if="zhc.itemGraphData != ''">
+            <img src="{{zhc.itemGraphData}}" />
+          </div>
         </div>
       </div>
     </div>
