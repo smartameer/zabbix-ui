@@ -80,9 +80,9 @@
   <div class="col-sm-12" data-ng-if="zhc.host.graphs.length > 0">
     <div class="panel panel-default" data-ng-init="graphstatus=true">
       <div class="panel-heading">
-        <h4 class="panel-title">
+        <h4 class="panel-title" data-ng-click="graphstatus = !graphstatus">
           <span class="glyphicon glyphicon-stats"></span> Graphs
-          <span data-ng-class="graphstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" data-ng-click="graphstatus = !graphstatus" class="pull-right glyphicon"></span>
+          <span data-ng-class="graphstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" class="pull-right glyphicon"></span>
         </h4>
       </div>
       <div class="panel-body" data-ng-show="graphstatus">
@@ -130,19 +130,18 @@
   <div class="col-sm-12">
     <div class="panel panel-default" data-ng-init="appstatus=false">
       <div class="panel-heading">
-        <h4 class="panel-title">
+        <h4 class="panel-title" data-ng-click="appstatus = !appstatus">
           <span class="glyphicon glyphicon-certificate"></span> Latest Data
-          <span data-ng-class="appstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" data-ng-click="appstatus = !appstatus" class="pull-right glyphicon"></span>
+          <span data-ng-class="appstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" class="pull-right glyphicon"></span>
         </h4>
       </div>
       <div class="panel-body no-padding" data-ng-show="appstatus">
         <div class="col-sm-3 col-md-2">
           <uib-tabset active="zhc.activeApplication" vertical="true" type="pills">
-            <uib-tab index="$index" heading="{{application.name}}" data-ng-repeat="application in zhc.applications">
-            </uib-tab>
+            <uib-tab index="$index" heading="{{application.name}}" data-ng-repeat="application in zhc.applications"></uib-tab>
           </uib-tabset>
         </div>
-        <div class="col-sm-9 col-md-10 tab-content no-right-padding">
+        <div class="col-sm-9 col-md-10 no-right-padding">
           <table class="table table-bordered table-condensed table-striped">
             <thead>
               <tr>
@@ -182,7 +181,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <span class="glyphicon glyphicon-stats"></span> {{zhc.selectedItemGraphName}}
-          <span data-ng-click="zhc.unselectItemGraph()" class="pull-right glyphicon glyphicon-remove-circle"></span>
+          <span uib-tooltip="Close" data-ng-click="zhc.unselectItemGraph()" class="text-danger pull-right glyphicon glyphicon-remove-circle"></span>
         </h4>
       </div>
       <div class="panel-body">

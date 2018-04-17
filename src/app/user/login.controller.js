@@ -2,7 +2,7 @@
   'use strict';
 
   /** @ngInject */
-  function LoginController($state, $cookies, $http, toastr, AuthService, ZABBIX_CONSTANTS) {
+  function LoginController($state, $cookies, $http, $location, toastr, AuthService, ZABBIX_CONSTANTS) {
     var zabbixAuth = $cookies.get('zabbix-auth');
     if (ZABBIX_CONSTANTS.SECURITY.LOGGED === true && angular.isDefined(zabbixAuth)) {
       $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
@@ -37,7 +37,6 @@
             uri.pop();
             uri.push('chart.php');
             ZABBIX_CONSTANTS.ITEM_CHART_URI = uri.join('/');
-
             toastr.info('Welcome to Radon');
             $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
           }, function (error) {
