@@ -127,7 +127,31 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-12">
+  <div class="col-sm-12" data-ng-if="zhc.keys(zhc.disks).length > 0">
+    <div class="panel panel-default" data-ng-init="diskstatus=true">
+      <div class="panel-heading">
+        <h4 class="panel-title" data-ng-click="diskstatus = !diskstatus">
+          <span class="glyphicon glyphicon-tasks"></span> Disks
+          <span data-ng-class="diskstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" class="pull-right glyphicon"></span>
+        </h4>
+      </div>
+      <div class="panel-body" data-ng-show="diskstatus">
+        <div class="col-sm-6 col-md-4 col-lg-3" data-ng-repeat="(key, disk) in zhc.disks">
+          <div class="media">
+            <div class="media-left">
+              <span class="glyphicon glyphicon-hdd media-object"></span>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Drive ({{key}})</h4>
+              <uib-progressbar data-ng-class="{'progress-striped active': disk.usedPercent > 75}" animate="true" value="disk.usedPercent" max="100" type="{{disk.usedPercent > 75 ? 'danger': 'primary'}}"></uib-progressbar>
+              <p class="text-muted">{{disk.free}} free of {{disk.total}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12" data-ng-if="zhc.applications.length > 0">
     <div class="panel panel-default" data-ng-init="appstatus=false">
       <div class="panel-heading">
         <h4 class="panel-title" data-ng-click="appstatus = !appstatus">

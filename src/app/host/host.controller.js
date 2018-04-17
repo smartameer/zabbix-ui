@@ -4,6 +4,7 @@
   /** @ngInject */
   function HostController($http, $state, $stateParams, $filter, $timeout, $interval, toastr, ZABBIX_CONSTANTS) {
     var vm = this;
+    vm.keys = Object.keys;
     vm.title = 'Host';
     vm.host = {
       memory: 0
@@ -25,6 +26,7 @@
 
     vm.activeApplication = 0;
     vm.applications = [];
+    vm.disks = {};
 
     vm.process = {
       running: 0
@@ -49,6 +51,15 @@
     vm.getGraph = function () {
       var params = 'period=' + vm.selectedTimePeriod + '&height=200&graphid=' + vm.selectedGraphId + '&t=' + new Date().getTime();
       vm.graphData = ZABBIX_CONSTANTS.CHART_URI + '?' + params;
+    };
+
+    var bytesToSize = function (bytes) {
+      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+      if (bytes === 0) {
+        return '0 Byte';
+      }
+      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+      return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     };
 
     vm.changeRefresh = function () {
@@ -136,9 +147,6 @@
     };
 
     vm.setHostData = function () {
-      var uptime = $filter('filter')(vm.hostItems, {key_: 'system.uptime'}, true)[0];
-      vm.host.uptime = uptime.lastclock * 1000;
-
       // RAM
       var memoryTotal = $filter('filter')(vm.hostItems, {key_: 'vm.memory.size[total]'}, true)[0];
       var totalmemory = parseFloat(memoryTotal.lastvalue);
@@ -155,19 +163,51 @@
       vm.memory.total = (totalmemory / (1024 * 1024)).toFixed(2);
       vm.memory.free = (freeMemory / (1024 * 1024)).toFixed(2);
 
-      // CPU
-      var cpuloadLastMin = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg1]'}, true)[0];
-      var cpuloadLast5Min = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg5]'}, true)[0];
-      var cpuloadLast15Min = $filter('filter')(vm.hostItems, {key_: 'system.cpu.load[percpu,avg15]'}, true)[0];
+      angular.forEach(vm.hostItems, function (item) {
+        // UP time
+        if (item.key_ === 'system.uptime') {
+          vm.host.uptime = item.lastclock * 1000;
+        }
 
-      vm.cpu.used[0].CPU = parseFloat(cpuloadLastMin.lastvalue).toFixed(2);
-      vm.cpu.lastmin = parseFloat(cpuloadLastMin.lastvalue).toFixed(2);
-      vm.cpu.last5min = parseFloat(cpuloadLast5Min.lastvalue).toFixed(2);
-      vm.cpu.last15min = parseFloat(cpuloadLast15Min.lastvalue).toFixed(2);
+        // CPU
+        if (item.key_ === 'system.cpu.load[percpu,avg1]') {
+          vm.cpu.used[0].CPU = parseFloat(item.lastvalue).toFixed(2);
+          vm.cpu.lastmin = parseFloat(item.lastvalue).toFixed(2);
+        }
+        if (item.key_ === 'system.cpu.load[percpu,avg5]') {
+          vm.cpu.last5min = parseFloat(item.lastvalue).toFixed(2);
+        }
+        if (item.key_ === 'system.cpu.load[percpu,avg15]') {
+          vm.cpu.last15min = parseFloat(item.lastvalue).toFixed(2);
+        }
 
-      // Process
-      var runningProcess = $filter('filter')(vm.hostItems, {key_: 'proc.num[]'}, true)[0];
-      vm.process.running = runningProcess.lastvalue;
+        // Process
+        if (item.key_ === 'proc.num[]') {
+          vm.process.running = item.lastvalue;
+        }
+
+        // Disks
+        if (/vfs.fs.size\[.*,.*\]/.test(item.key_)) {
+          var match = item.key_.match(/vfs.fs.size\[(.*),(.*)\]/);
+          if (match.length > 1 && angular.isUndefined(vm.disks[match[1]])) {
+            vm.disks[match[1]] = {
+              total: 0,
+              used: 0
+            };
+          }
+          if (match.length > 2 && match[2] === 'total') {
+            vm.disks[match[1]].total = item.lastvalue;
+          }
+          if (match.length > 2 && match[2] === 'used') {
+            vm.disks[match[1]].used = bytesToSize(item.lastvalue);
+            vm.disks[match[1]].usedPercent = Math.ceil((item.lastvalue * 100) / vm.disks[match[1]].total);
+            vm.disks[match[1]].total = bytesToSize(vm.disks[match[1]].total);
+          }
+          if (match.length > 2 && match[2] === 'free') {
+            vm.disks[match[1]].free = bytesToSize(item.lastvalue);
+          }
+        }
+      });
     };
 
     vm.getHostItems = function (id) {
