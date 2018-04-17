@@ -11,11 +11,11 @@
     var vm = this;
     vm.username = '';
     vm.password = '';
-    vm.server = ZABBIX_CONSTANTS.BASE_URI;
+    vm.server = ''; // ZABBIX_CONSTANTS.BASE_URI;
 
     vm.login = function () {
       if (vm.server.trim() === '') {
-          toastr.warning('Invalid Radon Endpoint');
+        toastr.warning('Invalid Radon Endpoint');
         return;
       }
 

@@ -2,7 +2,7 @@
   'use strict';
 
   /** @ngInject */
-  function AuthService($cookies, $q, $http, ZABBIX_CONSTANTS) {
+  function AuthService($cookies, $location, $q, $http, ZABBIX_CONSTANTS) {
     var auth = {};
 
     var login = function (data) {
@@ -39,6 +39,10 @@
         }).then(function (response) {
           var data = response.data;
           $cookies.put('zabbix-auth', data.result);
+          $cookies.put('zbx_sessionid', data.result, {
+            path: '/',
+            domain: $location.path()
+          });
           ZABBIX_CONSTANTS.SECURITY.LOGGED = true;
           ZABBIX_CONSTANTS.SECURITY.TOKEN = data.result;
           resolve(true);

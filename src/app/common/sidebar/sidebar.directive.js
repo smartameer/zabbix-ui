@@ -28,6 +28,7 @@
     vm.logout = function () {
       AuthService.logout(function () {
         $cookies.remove('zabbix-auth');
+        $cookies.remove('zbx_sessionid');
         $cookies.remove('zabbix-server');
         $cookies.remove('zabbix-username');
         $cookies.remove('zabbix-password');
