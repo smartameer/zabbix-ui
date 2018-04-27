@@ -182,7 +182,7 @@
         }
 
         // Process
-        if (item.key_ === 'proc.num[]') {
+        if (item.key_ === 'proc.num[,,run]') {
           vm.process.running = item.lastvalue;
         }
 
