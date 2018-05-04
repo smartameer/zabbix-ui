@@ -61,6 +61,15 @@
           authentication: true,
           title: 'Host Groups'
         }
+      })
+      .state('networks', {
+        url: '/networks',
+        parent: 'loggedin',
+        views: {'main@loggedin': {component: 'networks'}},
+        data: {
+          authentication: true,
+          title: 'Networks'
+        }
       });
   }
 
