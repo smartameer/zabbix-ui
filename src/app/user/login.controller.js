@@ -30,7 +30,6 @@
         $cookies.put('zabbix-server', vm.server);
         AuthService.login(vm.username, vm.password)
           .then(function () {
-
             var uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
             uri = uri.slice(0, uri.length - 1);
             uri.push('chart2.php');
