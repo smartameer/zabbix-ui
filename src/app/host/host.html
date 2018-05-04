@@ -184,7 +184,7 @@
                 <td class="text-center" uib-tooltip="{{item.status == 1 ? 'Disabled': 'Enabled'}}">
                   <span class="glyphicon" data-ng-class="{1: 'glyphicon-off text-danger', 0: 'glyphicon-ok text-success'}[item.status]" ></span>
                 </td>
-                <td>{{item.lastvalue}}</td>
+                <td ng-bind-html="item.lastvalue"></td>
                 <td class="text-center" uib-tooltip="{{item.state == 1 ? 'Not Supported': 'Normal'}}">
                   <span class="glyphicon" data-ng-class="{1: 'glyphicon-warning-sign text-danger', 0: 'glyphicon-ok-sign text-success'}[item.state]" ></span>
                 </td>
