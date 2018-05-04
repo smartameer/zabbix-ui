@@ -80,6 +80,12 @@
           hostids: null,
           selectItems: ['status', 'name', 'key_', 'lastvalue', 'state', 'error', 'lastclock', 'units']
         }
+      },
+      MAPS: {
+        method: 'map.get',
+        params: {
+          output: ['sysmapid', 'name', 'private']
+        }
       }
     }
   };

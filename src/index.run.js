@@ -13,6 +13,10 @@
     uri.pop();
     uri.push('chart.php');
     ZABBIX_CONSTANTS.ITEM_CHART_URI = uri.join('/');
+    uri.pop();
+    uri.push('map.php');
+    ZABBIX_CONSTANTS.MAP_CHART_URI = uri.join('/');
+
     $trace.enable('TRANSITION');
 
     $rootScope.pageClass = '';

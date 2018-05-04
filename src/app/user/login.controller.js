@@ -30,6 +30,7 @@
         $cookies.put('zabbix-server', vm.server);
         AuthService.login(vm.username, vm.password)
           .then(function () {
+
             var uri = ZABBIX_CONSTANTS.BASE_URI.split('/');
             uri = uri.slice(0, uri.length - 1);
             uri.push('chart2.php');
@@ -37,6 +38,10 @@
             uri.pop();
             uri.push('chart.php');
             ZABBIX_CONSTANTS.ITEM_CHART_URI = uri.join('/');
+            uri.pop();
+            uri.push('map.php');
+            ZABBIX_CONSTANTS.MAP_CHART_URI = uri.join('/');
+
             toastr.info('Welcome to Radon');
             $state.transitionTo('dashboard', {}, {reload: true, inherit: false, notify: true});
           }, function (error) {

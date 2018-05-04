@@ -1,3 +1,24 @@
-<div class="row-fluid" data-ng-cloak>
-  <h3 class="page-header">{{znc.title}} <span class="badge">{{znc.hosts.length}}</span></h3>
+<div data-ng-cloak class="row-fluid networks">
+  <h3 class="page-header">{{znc.title}} <span class="badge">{{znc.networks.length}}</span></h3>
+  <div class="col-md-3">
+    <div class="list-group">
+      <div class="list-group-item header">
+        <h4 class="list-group-item-heading">Available Maps</h4>
+      </div>
+      <div class="list-group-item" data-ng-class="{'active': znc.selectedNetwork.sysmapid === network.sysmapid}" data-ng-repeat="network in znc.networks" data-ng-click="znc.showMap($index)">
+        <span class="glyphicon glyphicon-globe"></span>
+        <span>{{network.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9" data-ng-cloak data-ng-if="znc.selectedNetwork !== null">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">{{znc.selectedNetwork.name}}</h4>
+      </div>
+      <div class="panel-body center-block">
+        <img src="{{znc.chartUri}}" class="img-responsive"/>
+      </div>
+    </div>
+  </div>
 </div>

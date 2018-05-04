@@ -1,0 +1,29 @@
+.networks {
+    .list-group {
+        .list-group-item {
+            .glyphicon {
+                font-size: 18px;
+                margin-right: 10px;
+            }
+            span {
+                vertical-align: middle;
+                font-size: 14px;
+            }
+            &.header {
+                background: #efefef;
+                border-bottom: 2px solid #ddd;
+                .list-group-item-heading {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    .panel-body.center-block {
+        min-height: 400px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        .img-responsive {
+            width: 90%;
+        }
+    }
+}
