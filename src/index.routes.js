@@ -70,6 +70,15 @@
           authentication: true,
           title: 'Networks'
         }
+      })
+      .state('sla', {
+        url: '/sla',
+        parent: 'loggedin',
+        views: {'main@loggedin': {component: 'sla'}},
+        data: {
+          authentication: true,
+          title: 'SLA Health Status'
+        }
       });
   }
 

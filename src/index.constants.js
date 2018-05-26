@@ -86,6 +86,14 @@
         params: {
           output: ['sysmapid', 'name', 'private']
         }
+      },
+      SERVICES: {
+        method: 'service.get',
+        params: {
+          output: 'extend',
+          selectTrigger: ['triggerid'],
+          selectDependencies: 'extend'
+        }
       }
     }
   };
