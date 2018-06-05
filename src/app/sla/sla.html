@@ -1,4 +1,31 @@
-<div class="row-fluid" data-ng-cloak>
+<div class="row-fluid sla-dashboard" data-ng-cloak>
   <h3 class="page-header">{{zhsc.title}}</h3>
-  <p>{{zhsc.services | json }}</p>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="col-sm-12 col-md-8 col-lg-6 col-xs-12">
+        <ul class="unstyled">
+          <li ng-repeat="tree in zhsc.tree" ng-include="'childrenTree'"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="text/ng-template" id="childrenTree">
+    <a class="btn btn-link" data-ng-if="tree.children" href="#" data-ng-click="tree.open = !tree.open">
+      <span class="glyphicon" data-ng-class="{true: 'glyphicon-minus', false: 'glyphicon-plus'}[tree.open]"></span>
+    </a>
+    <div class="content">
+      <div class="service" ng-class="{true: 'success', false: 'warning'}[tree.status == 0]">
+        <div class="name">{{tree.name}}</div>
+        <div class="sla-data">
+          <div class="sla-value">
+            <span class="label label-primary">Good SLA: {{tree.goodsla}}</span>
+          </div>
+          <div class="sla-status">Status: {{tree.status == 0 ? 'OK' : 'Problem'}}</div>
+        </div>
+      </div>
+      <ul class="unstyled" ng-if="tree.children && !!tree.open">
+        <li ng-repeat="tree in tree.children" ng-include="'childrenTree'"></li>
+      </ul>
+    </div>
+  </script>
 </div>

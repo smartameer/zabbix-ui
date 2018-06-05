@@ -1,0 +1,56 @@
+.sla-dashboard {
+    .unstyled {
+        list-style: none;
+        margin-left: -20px;
+        padding: 0;
+        li {
+            margin-left: 0px;
+            padding: 10px 0;
+        }
+        .btn-link {
+            float: left;
+            display: inline-block;
+            &+.content {
+                margin-left: 46px;
+            }
+        }
+        .content {
+            margin-left: 46px;
+            display: flex;
+            flex: 1 1;
+            flex-direction: column;
+            .service {
+                padding: 10px 0;
+                border-radius: 4px;
+                box-shadow: 0 0 6px 1px rgba(#000, 0.1);
+                &.success {
+                    background: rgba($brand-success, 0.2);
+                    border: 1px solid $brand-success;
+                }
+                &.warning {
+                    background: rgba($brand-warning, 0.2);
+                    border: 1px solid $brand-warning;
+                }
+            }
+            .name {
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 10px;
+                padding: 0 10px;
+            }
+            .sla-data {
+                flex-direction: row;
+                padding: 0 10px;
+                .sla-value {
+                    float: right;
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                }
+                .sla-status {
+                    margin-bottom: 10px;
+                    font-weight: 300;
+                }
+            }
+        }
+    }
+}
