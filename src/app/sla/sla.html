@@ -1,13 +1,9 @@
 <div class="row-fluid sla-dashboard" data-ng-cloak>
   <h3 class="page-header">{{zhsc.title}}</h3>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="col-sm-12 col-md-8 col-lg-6 col-xs-12">
-        <ul class="unstyled">
-          <li ng-repeat="tree in zhsc.tree" ng-include="'childrenTree'"></li>
-        </ul>
-      </div>
-    </div>
+  <div class="col-sm-12 col-md-8 col-lg-6 col-xs-12">
+    <ul class="unstyled">
+      <li ng-repeat="tree in zhsc.tree" ng-include="'childrenTree'"></li>
+    </ul>
   </div>
   <script type="text/ng-template" id="childrenTree">
     <a class="btn btn-link" data-ng-if="tree.children" href="#" data-ng-click="tree.open = !tree.open">
