@@ -42,8 +42,8 @@
         }
       });
 
-      $timeout(function() {
-        angular.forEach(data, function(obj) {
+      $timeout(function () {
+        angular.forEach(data, function (obj) {
           if (vm.pushed.indexOf(obj.serviceid) < 0) {
             parent.push(obj);
           }
