@@ -2,7 +2,7 @@
   'use strict';
 
   /** @ngInject */
-  function HostController($http, $state, $stateParams, $filter, $timeout, $interval, toastr, ZABBIX_CONSTANTS) {
+  function HostController($http, $state, $window, $log, $stateParams, $filter, $timeout, $interval, toastr, ZABBIX_CONSTANTS) {
     var vm = this;
     vm.keys = Object.keys;
     vm.title = 'Host';
@@ -51,6 +51,25 @@
     vm.getGraph = function () {
       var params = 'period=' + vm.selectedTimePeriod + '&height=200&graphid=' + vm.selectedGraphId + '&t=' + new Date().getTime();
       vm.graphData = ZABBIX_CONSTANTS.CHART_URI + '?' + params;
+    };
+
+    var tableToJson = function (table) {
+      var data = [];
+      // first row needs to be headers
+      var headers = [];
+      for (var i = 0; i < table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi, '');
+      }
+      // go through cells
+      for (var k = 1; k < table.rows.length; k++) {
+        var tableRow = table.rows[k];
+        var rowData = {};
+        for (var j = 0; j < tableRow.cells.length; j++) {
+          rowData[headers[j]] = tableRow.cells[j].innerHTML;
+        }
+        data.push(rowData);
+      }
+      return data;
     };
 
     var bytesToSize = function (bytes) {
@@ -236,6 +255,26 @@
         data: data
       }).then(function (response) {
         if (response.data.result.length > 0) {
+          var processes = $filter('filter')(response.data.result, {name: 'Processes'}, true);
+          if (processes.length > 0 && processes[0].items.length > 2) {
+            var item = $filter('filter')(processes[0].items, {key_: 'proc.list'}, true);
+            if (item.length > 0) {
+              item[0].lastvalue = item[0].lastvalue.replace('<table>', '<table class="table table-condensed">');
+              $timeout(function () {
+                try {
+                  var itemid = item[0].itemid;
+                  var parser = new DOMParser();
+                  var elem = parser.parseFromString(item[0].lastvalue, 'text/html');
+                  var table = elem.querySelector('table');
+                  var data = tableToJson(table);
+                  $window.localStorage.setItem('zabbix-processes-' + id, angular.toJson(data));
+                  $window.localStorage.setItem('zabbix-processid-' + id, angular.toJson({item: itemid, name: vm.host.name}));
+                } catch (e) {
+                  $log.error(e);
+                }
+              }, 100);
+            }
+          }
           vm.applications = response.data.result;
         } else {
           toastr.warning('Invalid Host');

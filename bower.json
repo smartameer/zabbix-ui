@@ -2,20 +2,20 @@
   "name": "fountain-inject",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "^1.6.2",
+    "angular": "1.6.2",
     "angular-ui-router": "1.0.0-beta.3",
     "components-font-awesome": "^5.0.6",
     "bootstrap-sass": "^3.3.7",
-    "angular-cookies": "^1.6.9",
+    "angular-cookies": "1.6.2",
     "angular-bootstrap": "^2.5.0",
     "angular-toastr": "^2.1.1",
-    "angular-messages": "^1.6.9",
-    "angular-sanitize": "^1.6.9",
-    "angular-aria": "^1.6.9",
-    "c3-angular": "^1.4.0"
+    "angular-messages": "1.6.2",
+    "angular-sanitize": "1.6.2",
+    "angular-aria": "1.6.2",
+    "c3-angular": "1.4.0"
   },
   "devDependencies": {
-    "angular-mocks": "^1.6.2"
+    "angular-mocks": "1.6.2"
   },
   "overrides": {
     "bootstrap-sass": {
@@ -62,6 +62,6 @@
     }
   },
   "resolutions": {
-    "angular": "~1.6.9"
+    "angular": "1.6.2"
   }
 }

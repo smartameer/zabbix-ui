@@ -2,11 +2,12 @@
   'use strict';
 
   /** @ngInject */
-  function DashboardController($http, $filter, ZABBIX_CONSTANTS) {
+  function DashboardController($http, $filter, $window, ZABBIX_CONSTANTS) {
     var vm = this;
     vm.title = 'Dashboard';
     vm.problems = [];
     vm.unknowns = [];
+    vm.processes = {};
     vm.informations = [];
     vm.problemCount = 0;
     vm.unknownCount = 0;
@@ -96,6 +97,26 @@
       });
     };
 
+    vm.getProcessesList = function() {
+      angular.forEach($window.localStorage, function(value, key) {
+        if (key.match('zabbix-processes-') !== null) {
+          var hostid = key.split('zabbix-processes-')[1];
+          if (angular.isUndefined(vm.processes[hostid])) {
+            vm.processes[hostid] = {};
+          }
+          vm.processes[hostid].processes = angular.fromJson(value);
+        }
+        if (key.match('zabbix-processid-') !== null) {
+          var hostid = key.split('zabbix-processid-')[1];
+          if (angular.isUndefined(vm.processes[hostid])) {
+            vm.processes[hostid] = {};
+          }
+          vm.processes[hostid].details = angular.fromJson(value);
+        }
+      });
+    };
+
+    vm.getProcessesList();
     vm.getTriggersList();
   }
 
