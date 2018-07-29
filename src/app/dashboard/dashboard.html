@@ -56,44 +56,6 @@
       </div>
     </div>
   </div>
-  <div data-ng-if="zdc.processes" class="col-md-4 col-sm-12 col-xs-12">
-    <div ng-repeat="host in zdc.processes" class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">Top 20 Process List for <label class="label label-success">{{host.details.name}}</label></h4>
-      </div>
-      <div class="panel-body" style="max-height: 250px; overflow: auto;padding: 0">
-        <table class="table table-striped table-condensed">
-          <thead>
-            <tr>
-              <th class="text-center">Process ID</th>
-              <th class="text-center">Parent Process ID</th>
-              <th>Command</th>
-              <th class="text-center">Memory(%)</th>
-              <th class="text-center">CPU(%)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="item in host.processes">
-              <td class="text-center">{{item.pid}}</td>
-              <td class="text-center">{{item.ppid}}</td>
-              <td>{{item.cmd}}</td>
-              <td class="text-center">{{item['%mem']}}</td>
-              <td class="text-center">{{item['%cpu']}}</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th class="text-center">Process ID</th>
-              <th class="text-center">Parent Process ID</th>
-              <th>Command</th>
-              <th class="text-center">Memory(%)</th>
-              <th class="text-center">CPU(%)</th>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-  </div>
   <div class="col-sm-12 col-xs-12 col-md-8">
     <div class="panel" data-ng-class="{alert: 'panel-danger', warning: 'panel-warning', info: 'panel-primary', '': 'panel-default'}[zdc.activeType]">
       <div class="panel-heading">

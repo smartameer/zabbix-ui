@@ -26,6 +26,7 @@
 
     vm.activeApplication = 0;
     vm.applications = [];
+    vm.processes = [];
     vm.disks = {};
 
     vm.process = {
@@ -269,6 +270,7 @@
                   var data = tableToJson(table);
                   $window.localStorage.setItem('zabbix-processes-' + id, angular.toJson(data));
                   $window.localStorage.setItem('zabbix-processid-' + id, angular.toJson({item: itemid, name: vm.host.name}));
+                  vm.processes = data;
                 } catch (e) {
                   $log.error(e);
                 }
