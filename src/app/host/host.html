@@ -101,12 +101,17 @@
       </div>
     </div>
   </div>
-  <div data-ng-if="zhc.processes.length > 0" class="col-md-6 col-sm-12 col-xs-12">
+  <div data-ng-if="zhc.processes.all.length > 0" class="col-md-6 col-sm-12 col-xs-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title" data-ng-click="zhc.diskstatus = !zhc.diskstatus">
-          <span class="glyphicon glyphicon-flag"></span> Top 20 Processes
-          <span data-ng-class="zhc.diskstatus == true ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'" class="pull-right glyphicon"></span>
+        <h4 class="panel-title">
+          <div class="btn-group">
+            <label class="btn btn-xs btn-primary" ng-model="zhc.watching" uib-btn-radio="true">Watched</label>
+            <label class="btn btn-xs btn-primary" ng-model="zhc.watching" uib-btn-radio="false">All Process</label>
+          </div>
+          <span class="pull-right">
+            <span class="glyphicon glyphicon-flag"></span> Top 20 Processes
+          </span>
         </h4>
       </div>
       <div class="panel-body" data-ng-show="zhc.diskstatus" style="height: 250px; overflow: auto;padding: 0">
@@ -118,18 +123,18 @@
               <th>Command</th>
               <th class="text-center">Memory(%)</th>
               <th class="text-center">CPU(%)</th>
-              <th>Watch</th>
+              <th data-ng-if="!zhc.watching">Watch</th>
             </tr>
           </thead>
           <tbody>
-            <tr data-ng-repeat="item in zhc.processes" data-ng-init="item.watch = false">
+            <tr data-ng-repeat="item in zhc.processes[(!zhc.watching ? 'all' : 'watched')]">
               <td class="text-center">{{item.pid}}</td>
               <td class="text-center">{{item.ppid}}</td>
               <td>{{item.cmd}}</td>
               <td class="text-center">{{item['%mem']}}</td>
               <td class="text-center">{{item['%cpu']}}</td>
-              <td>
-                <button data-ng-click="item.watch = !item.watch" title="{{item.watch ? 'Unwatch' : 'Watch'}} this process" class="btn btn-xs" data-ng-class="{true: 'btn-success', false: 'btn-primary'}[item.watch]">
+              <td data-ng-if="!zhc.watching">
+                <button data-ng-click="zhc.watchProcess($index)" title="{{item.watch ? 'Unwatch' : 'Watch'}} this process" class="btn btn-xs" data-ng-class="{true: 'btn-success', false: 'btn-primary'}[item.watch]">
                   <i class="glyphicon" style="font-size: 11px" data-ng-class="{true: 'glyphicon-eye-close', false: 'glyphicon-eye-open'}[item.watch]"></i>
                 </button>
               </td>
@@ -142,7 +147,7 @@
               <th>Command</th>
               <th class="text-center">Memory(%)</th>
               <th class="text-center">CPU(%)</th>
-              <th>Watch</th>
+              <th data-ng-if="!zhc.watching">Watch</th>
             </tr>
           </tfoot>
         </table>

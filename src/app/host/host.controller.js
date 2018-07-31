@@ -6,9 +6,7 @@
     var vm = this;
     vm.keys = Object.keys;
     vm.title = 'Host';
-    vm.host = {
-      memory: 0
-    };
+    vm.host = {memory: 0};
     vm.hostItems = [];
     vm.selectedGraphName = '';
     vm.selectedGraphId = 0;
@@ -28,10 +26,9 @@
     vm.applications = [];
     vm.processes = [];
     vm.disks = {};
+    vm.watching = true;
 
-    vm.process = {
-      running: 0
-    };
+    vm.process = {running: 0};
 
     vm.memory = {
       column: [{id: 'Memory', type: 'gauge'}],
@@ -270,7 +267,8 @@
                   var data = tableToJson(table);
                   $window.localStorage.setItem('zabbix-processes-' + id, angular.toJson(data));
                   $window.localStorage.setItem('zabbix-processid-' + id, angular.toJson({item: itemid, name: vm.host.name}));
-                  vm.processes = data;
+                  vm.processes = {all: data, watched: []};
+                  vm.setWatchedProcess();
                 } catch (e) {
                   $log.error(e);
                 }
@@ -308,6 +306,68 @@
       }).catch(function () {
         toastr.error('Could not get the host details. Try again.');
       });
+    };
+
+    vm.watchProcess = function (idx) {
+      var item = vm.processes.all[idx];
+      if ('watch' in item) {
+        item.watch = !item.watch;
+      } else {
+        item.watch = true;
+      }
+
+      var items = $window.localStorage.getItem('zabbix-watched-process');
+      if (items) {
+        items = angular.fromJson(atob(items));
+      } else {
+        items = [];
+      }
+
+      if (item.watch) {
+        var data = angular.copy(item);
+        delete data.watch;
+        items.push(data);
+      } else if (items.length > 0) {
+        angular.forEach(items, function (i, k) {
+          if (i.cmd === item.cmd) {
+            items.splice(k, 1);
+          }
+        });
+      }
+      $window.localStorage.setItem('zabbix-watched-process', btoa(angular.toJson(items)));
+      vm.processes.watched = items;
+    };
+
+    vm.setWatchedProcess = function () {
+      angular.forEach(vm.processes.all, function (p) {
+        p.watch = false;
+      });
+      var items = $window.localStorage.getItem('zabbix-watched-process');
+      if (items) {
+        items = angular.fromJson(atob(items));
+        vm.processes.watched = items;
+        angular.forEach(vm.processes.all, function (p) {
+          angular.forEach(items, function (i) {
+            if (i.cmd === p.cmd) {
+              i.pid = p.pid;
+              i.ppid = p.ppid;
+              i['%mem'] = p['%mem'];
+              i['%cpu'] = p['%cpu'];
+              p.watch = true;
+            }
+          });
+        });
+        $window.localStorage.setItem('zabbix-watched-process', btoa(angular.toJson(items)));
+      } else {
+        items = [];
+      }
+
+      $timeout(function () {
+        if (items.length <= 0) {
+          vm.watching = false;
+        }
+        vm.processes.watched = items;
+      }, 10);
     };
 
     vm.getHost($stateParams.id);
