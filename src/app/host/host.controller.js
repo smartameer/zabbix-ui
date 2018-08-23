@@ -316,7 +316,7 @@
         item.watch = true;
       }
 
-      var items = $window.localStorage.getItem('zabbix-watched-process');
+      var items = $window.localStorage.getItem('zabbix-watched-process-' + vm.host.hostid);
       if (items) {
         items = angular.fromJson(atob(items));
       } else {
@@ -334,7 +334,7 @@
           }
         });
       }
-      $window.localStorage.setItem('zabbix-watched-process', btoa(angular.toJson(items)));
+      $window.localStorage.setItem('zabbix-watched-process-' + vm.host.hostid, btoa(angular.toJson(items)));
       vm.processes.watched = items;
     };
 
@@ -342,7 +342,7 @@
       angular.forEach(vm.processes.all, function (p) {
         p.watch = false;
       });
-      var items = $window.localStorage.getItem('zabbix-watched-process');
+      var items = $window.localStorage.getItem('zabbix-watched-process-' + vm.host.hostid);
       if (items) {
         items = angular.fromJson(atob(items));
         vm.processes.watched = items;
@@ -357,7 +357,7 @@
             }
           });
         });
-        $window.localStorage.setItem('zabbix-watched-process', btoa(angular.toJson(items)));
+        $window.localStorage.setItem('zabbix-watched-process-' + vm.host.hostid, btoa(angular.toJson(items)));
       } else {
         items = [];
       }
