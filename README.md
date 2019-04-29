@@ -12,8 +12,7 @@ Zabbix UI
 
 - Copy `env.json.example`, Enter proper url for zabbix API. and save as `env.json` in root folder.
 - Run this command - `npm run serve`
-- In console it will show the development url to open in browser. (Default: `http://localhost:3000`)
-
+- In console it will show the development url to open in browser. (Default: `http://localhost:3000`npm
 #### Production
 
 - Copy `env.json.example`, Enter proper url for zabbix API. and save as `env.json` in root folder.

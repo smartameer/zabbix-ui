@@ -4,7 +4,7 @@
 			<div class="panel-body">
         <h2 class="page-header text-uppercase text-center">Radon Login</h2>
 				<form class="form-horizontal" data-ng-submit="zlc.login()">
-					<div class="form-group">
+					<div class="form-group"  ng-show="hidden">
 						<label for="inputServer" class="col-sm-3 control-label">Radon Endpoint</label>
 						<div class="col-sm-9">
 							<input type="url" class="form-control" autofocus title="Example:  http://company.com/zabbix/api_jsonrpc.php" data-ng-required="true" data-ng-model="zlc.server" id="inputServer">

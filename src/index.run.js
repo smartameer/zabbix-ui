@@ -19,6 +19,7 @@
 
     $trace.enable('TRANSITION');
 
+
     $rootScope.pageClass = '';
     var stateStartCall = $rootScope.$on('$stateChangeStart', function (event, state) {
       if ((angular.isDefined(state.data) && state.data.authentication === true) && !AuthService.isLoggedIn()) {
@@ -74,7 +75,9 @@
   };
 
   /** @ngInject */
-  var configBlock = function ($httpProvider, $uibTooltipProvider, toastrConfig) {
+  var configBlock = function ($httpProvider, $uibTooltipProvider, $compileProvider, toastrConfig) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp||rdp|mailto|chrome-extension):/);
+
     $httpProvider.interceptors.push('TokenInterceptor');
     $uibTooltipProvider.options({
       appendToBody: true
@@ -93,3 +96,5 @@
     .run(runBlock)
     .config(configBlock);
 })();
+
+

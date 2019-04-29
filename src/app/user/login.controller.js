@@ -11,7 +11,7 @@
     var vm = this;
     vm.username = '';
     vm.password = '';
-    vm.server = ZABBIX_CONSTANTS.BASE_URI;
+    vm.server = "http://" + window.location.hostname + "/api_jsonrpc.php" ;
 
     vm.login = function () {
       if (vm.server.trim() === '') {

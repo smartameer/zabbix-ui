@@ -40,8 +40,17 @@
               </span>
             </td>
             <td>
-              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}{{$last ? '' : ', '}}</span>
+              <span data-ng-repeat="ip in host.interfaces">{{ip.ip}}:{{ip.port}}{{$last ? '' : ', '}}
+                <a href="rdp://{{ip.ip}}" title="Mac">Windows</a>
+                <a href="rdp://full%20address=s:{{ip.ip}}" title="Mac">Mac</a>
+
+              </span>
+
             </td>
+            <td>
+              <span class="label label-primary" title="{{host.description}}">{{host.description}}</span>
+            </td>
+
             <td data-ng-if="zhsc.selectedGroupId == false">
               <span class="label label-primary" data-ng-repeat="group in host.groups">{{group.name}}</span>
             </td>
